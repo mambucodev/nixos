@@ -34,7 +34,7 @@
       which-key-nvim
     ];
 
-    extraLuaConfig = ''
+    initLua = ''
       vim.g.mapleader = " "
       vim.g.maplocalleader = " "
 

@@ -52,7 +52,7 @@
 
   outputs = { self, nixpkgs, lanzaboote, home-manager, ... }@inputs: {
     nixosConfigurations.freetop = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      # hostPlatform is set in hosts/freetop/hardware-configuration.nix.
       specialArgs = { inherit inputs; };
 
       modules = [

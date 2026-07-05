@@ -32,7 +32,7 @@ in
     pkgs.apostrophe
     clapper
     pkgs.bitwarden-desktop
-    inputs.claude-desktop-bin.packages.${pkgs.system}.default
+    inputs.claude-desktop-bin.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs.gnomeExtensions.hibernate-status-button
     pkgs.gnomeExtensions.appindicator
     pkgs.gnomeExtensions.media-controls
