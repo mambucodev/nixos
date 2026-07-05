@@ -1,0 +1,16 @@
+# nix build outputs
+result
+result-*
+
+# home-manager clobber backups (see flake.nix backupFileExtension)
+*.hm-backup
+
+# direnv
+.direnv/
+
+# editor / OS cruft
+*.swp
+.DS_Store
+
+# local, machine-specific Claude Code settings (permissions etc.)
+.claude/settings.local.json
