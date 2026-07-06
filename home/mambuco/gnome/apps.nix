@@ -38,8 +38,17 @@ let
     '';
   };
 
-  # Clapper as default handler for every video type it advertises.
+  # Default handlers, keyed by app .desktop id.
   clapper = "com.github.rafostar.Clapper.desktop";
+  loupe = "org.gnome.Loupe.desktop";
+  papers = "org.gnome.Papers.desktop";
+  textEditor = "org.gnome.TextEditor.desktop";
+  zed = "dev.zed.Zed.desktop";
+  apostrophe = "org.gnome.gitlab.somas.Apostrophe.desktop";
+  zen = "zen-beta.desktop";
+
+  assign = app: mimes: map (m: lib.nameValuePair m app) mimes;
+
   videoMimes = [
     "video/3gp"
     "video/3gpp"
@@ -78,6 +87,74 @@ let
     "video/x-theora"
     "video/x-theora+ogg"
   ];
+
+  audioMimes = [
+    "audio/aac"
+    "audio/flac"
+    "audio/mp4"
+    "audio/mpeg"
+    "audio/ogg"
+    "audio/opus"
+    "audio/webm"
+    "audio/x-vorbis+ogg"
+    "audio/x-wav"
+  ];
+
+  imageMimes = [
+    "image/avif"
+    "image/bmp"
+    "image/gif"
+    "image/heif"
+    "image/jpeg"
+    "image/png"
+    "image/svg+xml"
+    "image/tiff"
+    "image/webp"
+    "image/x-icon"
+  ];
+
+  # Plain text plus structured config/data formats -> GNOME Text Editor.
+  # (.nix, .ini, .conf carry no dedicated MIME and land here as text/plain.)
+  textMimes = [
+    "text/plain"
+    "text/xml"
+    "application/json"
+    "application/toml"
+    "application/xml"
+    "application/x-yaml"
+    "application/yaml"
+  ];
+
+  # Actual programming source -> Zed.
+  codeMimes = [
+    "application/javascript"
+    "application/x-php"
+    "application/x-ruby"
+    "application/x-shellscript"
+    "text/css"
+    "text/javascript"
+    "text/rust"
+    "text/vnd.trolltech.linguist" # .ts collides with Qt Linguist in shared-mime-info
+    "text/x-c++hdr"
+    "text/x-c++src"
+    "text/x-chdr"
+    "text/x-csrc"
+    "text/x-go"
+    "text/x-java"
+    "text/x-lua"
+    "text/x-python"
+    "text/x-rust"
+    "text/x-shellscript"
+  ];
+
+  browserMimes = [
+    "text/html"
+    "application/xhtml+xml"
+    "x-scheme-handler/http"
+    "x-scheme-handler/https"
+    "x-scheme-handler/about"
+    "x-scheme-handler/unknown"
+  ];
 in
 {
   home.file = builtins.listToAttrs (map hideEntry hiddenApps);
@@ -85,7 +162,14 @@ in
   xdg.mimeApps = {
     enable = true;
     defaultApplications = builtins.listToAttrs (
-      map (m: lib.nameValuePair m clapper) videoMimes
+      assign clapper videoMimes
+      ++ assign clapper audioMimes
+      ++ assign loupe imageMimes
+      ++ assign papers [ "application/pdf" ]
+      ++ assign textEditor textMimes
+      ++ assign zed codeMimes
+      ++ assign apostrophe [ "text/markdown" ]
+      ++ assign zen browserMimes
     );
   };
 

@@ -110,7 +110,8 @@ in
         "zen-beta.desktop"
         "org.gnome.Nautilus.desktop"
         "vesktop.desktop"
-        "claude.desktop"
+        "org.telegram.desktop.desktop"
+        "claude-desktop.desktop"
       ];
     };
 
