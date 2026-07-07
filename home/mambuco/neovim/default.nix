@@ -63,11 +63,16 @@
       vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
       vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>")
 
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        indent = { enable = true },
-        ensure_installed = {},
-        auto_install = false,
+      -- nvim-treesitter's main-branch rewrite dropped `nvim-treesitter.configs`.
+      -- Grammars come from Nix (withAllGrammars) on the runtimepath and filetypes
+      -- self-register via the plugin's plugin/filetypes.lua, so just start
+      -- highlighting + treesitter indent per buffer (pcall skips fts with no parser).
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(ev)
+          if pcall(vim.treesitter.start, ev.buf) then
+            vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
       })
 
       local telescope = require("telescope")
@@ -102,23 +107,27 @@
       })
 
       local caps = require("cmp_nvim_lsp").default_capabilities()
-      local lsp  = require("lspconfig")
 
-      local on_attach = function(_, bufnr)
-        local map = function(k, fn, desc)
-          vim.keymap.set("n", k, fn, { buffer = bufnr, desc = desc })
-        end
-        map("gd",         vim.lsp.buf.definition,     "Go to definition")
-        map("gr",         vim.lsp.buf.references,     "References")
-        map("K",          vim.lsp.buf.hover,          "Hover")
-        map("<leader>rn", vim.lsp.buf.rename,         "Rename")
-        map("<leader>ca", vim.lsp.buf.code_action,    "Code action")
-        map("<leader>f",  function() vim.lsp.buf.format({ async = true }) end, "Format")
-      end
+      -- nvim-lspconfig 2.x deprecated the require("lspconfig")[server].setup()
+      -- framework; use Neovim 0.11's native vim.lsp.config/enable. lspconfig now
+      -- only ships the per-server lsp/*.lua defaults that vim.lsp.enable reads.
+      vim.lsp.config("*", { capabilities = caps })
 
-      for _, server in ipairs({ "nil_ls", "lua_ls", "ts_ls", "jsonls", "html", "cssls" }) do
-        lsp[server].setup({ capabilities = caps, on_attach = on_attach })
-      end
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+          local map = function(k, fn, desc)
+            vim.keymap.set("n", k, fn, { buffer = ev.buf, desc = desc })
+          end
+          map("gd",         vim.lsp.buf.definition,  "Go to definition")
+          map("gr",         vim.lsp.buf.references,  "References")
+          map("K",          vim.lsp.buf.hover,       "Hover")
+          map("<leader>rn", vim.lsp.buf.rename,      "Rename")
+          map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          map("<leader>f",  function() vim.lsp.buf.format({ async = true }) end, "Format")
+        end,
+      })
+
+      vim.lsp.enable({ "nil_ls", "lua_ls", "ts_ls", "jsonls", "html", "cssls" })
     '';
   };
 }
