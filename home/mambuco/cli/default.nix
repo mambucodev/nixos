@@ -11,6 +11,9 @@
   programs.fish = {
     enable = true;
     shellAliases.hibernate = "systemctl hibernate";
+    functions.nixs = ''
+      xdg-open "https://search.nixos.org/packages?query=$argv"
+    '';
   };
 
   programs.ghostty = {
