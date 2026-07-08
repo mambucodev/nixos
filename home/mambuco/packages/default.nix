@@ -45,6 +45,7 @@ in
     pkgs.proton-vpn
     pkgs.stremio-linux-shell
     pkgs.figma-linux
+    pkgs.cartero
     cider
   ];
 }
