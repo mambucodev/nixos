@@ -13,6 +13,7 @@
     yelp
     gnome-console
     totem
+    showtime
   ];
 
   documentation.nixos.enable = false;
