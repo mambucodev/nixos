@@ -115,6 +115,7 @@ in
         "appindicatorsupport@rgcjonas.gmail.com"
         "mediacontrols@cliffniff.github.com"
         "top-bar-organizer@julian.gse.jsts.xyz"
+        "activate-window-by-title@lucaswerkmeister.de"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"

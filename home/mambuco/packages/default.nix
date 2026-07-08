@@ -38,6 +38,7 @@ in
     pkgs.gnomeExtensions.appindicator
     pkgs.gnomeExtensions.media-controls
     pkgs.gnomeExtensions.top-bar-organizer
+    pkgs.gnomeExtensions.activate-window-by-title  # D-Bus window raiser; used by the `nixs` fish function
     pkgs.libreoffice
     pkgs.telegram-desktop
     pkgs.teams-for-linux
