@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.pointerCursor = {
@@ -6,23 +6,16 @@
     package = pkgs.kdePackages.breeze;
     size = 24;
     gtk.enable = true;
-    x11.enable = true;
+    # gsd-xsettings owns the X cursor (theme + size via XSETTINGS) now that
+    # XWayland is scaled — don't let the module write its own conflicting
+    # Xresources/xsetroot state. See ../gnome for xwayland-scaling-factor.
+    x11.enable = false;
   };
 
-  # eDP-1 runs at 1.25 scale but Mutter doesn't scale the XWayland cursor, so X11
-  # apps draw a shrunken 24px pointer. Re-assert a pre-scaled 30px (24 × 1.25)
-  # into the session env after login. Bump if the primary scale changes.
-  systemd.user.services.xwayland-cursor-size = {
-    Unit = {
-      Description = "Enlarge XWayland cursor to match the fractionally-scaled Wayland cursor";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd XCURSOR_SIZE=30";
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
+  # home.pointerCursor still exports XCURSOR_SIZE = size (24). XWayland runs at
+  # xwayland-scaling-factor = 2, so a raw 24 would draw a 24 -> 12 logical ->
+  # 15px pointer. Feed the pre-scaled 24 x 2 = 48 so X apps land at the same
+  # 30 physical px (24 logical x 1.25) as the Wayland cursor. GNOME's Wayland
+  # cursor ignores this var (it uses org.gnome.desktop.interface cursor-size).
+  home.sessionVariables.XCURSOR_SIZE = lib.mkForce "48";
 }

@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  inherit (lib.hm.gvariant) mkUint32;
+  inherit (lib.hm.gvariant) mkUint32 mkDouble;
 in
 {
   imports = [ ./apps.nix ];
@@ -17,6 +17,17 @@ in
       enable-animations = true;
       enable-hot-corners = false;
       cursor-theme = "breeze_cursors";
+      cursor-size = 24;
+    };
+
+    # eDP-1 runs at 1.25 fractional scale. GNOME 50 graduated XWayland scaling
+    # out of experimental-features: X clients now render in this integer-scaled
+    # coordinate space and Mutter downscales the buffer to the 1.25 logical
+    # layout, so X apps + their cursor match Wayland instead of drawing shrunken.
+    # 0 = auto, which rounds 1.25 -> 1 (no scaling); force 2 so gsd-xsettings
+    # can drive Gdk/WindowScalingFactor and the cursor size for X apps coherently.
+    "org/gnome/mutter/wayland" = {
+      xwayland-scaling-factor = mkDouble 2.0;
     };
 
     "org/gnome/desktop/background" = {
