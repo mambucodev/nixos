@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   # depau/libfprint elanmoc2 branch: adds this laptop's Elan 04f3:0c5e reader.
@@ -27,6 +27,21 @@
   ];
 
   services.fprintd.enable = true;
+
+  # The fork has no suspend support: a USB transfer left in flight across
+  # sleep trips g_assert_null(in_flight_cmd) and aborts fprintd mid-resume,
+  # wedging the PAM conversation (black lock screen). Stop it before sleep;
+  # D-Bus activation brings it back on demand.
+  systemd.services.fprintd.serviceConfig.Restart = "on-failure";
+  systemd.services.fprintd-pre-sleep = {
+    description = "Stop fprintd before sleep";
+    wantedBy = [ "sleep.target" ];
+    before = [ "sleep.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/systemctl stop fprintd.service";
+    };
+  };
 
   # sudo + graphical login by fingerprint (GDM uses the gdm-password stack).
   security.pam.services = {
