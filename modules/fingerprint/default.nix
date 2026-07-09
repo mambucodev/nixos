@@ -6,6 +6,10 @@
     (final: prev: {
       libfprint = prev.libfprint.overrideAttrs (_: {
         src = inputs.depau-libfprint;
+        # nixpkgs cherry-picks upstream device-ID patches onto its pinned
+        # source; they don't apply to the fork's tree (realtek hunk fails).
+        # The fork carries our reader (Elan 04f3:0c5e) itself, so drop them.
+        patches = [ ];
         # Branch lacks tests/test-runner.sh that nixpkgs' postPatch expects;
         # rewrite the python test shebangs meson runs at configure time instead.
         postPatch = ''
