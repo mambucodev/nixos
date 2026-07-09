@@ -22,6 +22,7 @@
     ../../modules/claude
     ../../modules/maintenance
     ../../modules/hardware
+    ../../modules/oomd
     ../../modules/hibernation
     ../../modules/bluetooth
     ../../modules/avahi
