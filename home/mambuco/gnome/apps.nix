@@ -207,5 +207,16 @@ in
       Icon=teams-for-linux
       X-GNOME-Autostart-enabled=true
     '';
+
+    "autostart/protonvpn.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Proton VPN
+      Exec=protonvpn-app
+      StartupNotify=false
+      Terminal=false
+      Icon=proton-vpn-logo
+      X-GNOME-Autostart-enabled=true
+    '';
   };
 }
