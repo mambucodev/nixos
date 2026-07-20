@@ -9,6 +9,7 @@
     ../../modules/networking
     ../../modules/locale
     ../../modules/desktop
+    ../../modules/fonts
     ../../modules/audio
     ../../modules/shell
     ../../modules/users

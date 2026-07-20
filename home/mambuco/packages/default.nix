@@ -28,7 +28,6 @@ let
 in
 {
   home.packages = [
-    pkgs.fastfetch
     pkgs.sshfs
     pkgs.apostrophe
     clapper

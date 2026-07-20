@@ -18,6 +18,7 @@ in
       enable-hot-corners = false;
       cursor-theme = "breeze_cursors";
       cursor-size = 24;
+      monospace-font-name = "JetBrainsMono Nerd Font 11";
     };
 
     # eDP-1 runs at 1.25 fractional scale. GNOME 50 graduated XWayland scaling

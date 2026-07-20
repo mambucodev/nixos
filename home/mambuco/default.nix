@@ -4,6 +4,7 @@
   imports = [
     ./packages
     ./cli
+    ./fastfetch
     ./git
     ./ssh
     ./zen-browser
