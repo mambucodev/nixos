@@ -18,6 +18,7 @@
     ./dev
     ./claude
     ./budslink
+    ./cast
   ];
 
   home.username = "mambuco";
