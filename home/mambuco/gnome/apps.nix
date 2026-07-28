@@ -209,6 +209,17 @@ in
       X-GNOME-Autostart-enabled=true
     '';
 
+    "autostart/newsflash.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Newsflash
+      Exec=io.gitlab.news_flash.NewsFlash --headless
+      StartupNotify=false
+      Terminal=false
+      Icon=io.gitlab.news_flash.NewsFlash
+      X-GNOME-Autostart-enabled=true
+    '';
+
     "autostart/protonvpn.desktop".text = ''
       [Desktop Entry]
       Type=Application

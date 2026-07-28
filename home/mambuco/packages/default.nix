@@ -70,6 +70,7 @@ in
     pkgs.stremio-linux-shell
     pkgs.figma-linux
     pkgs.cartero
+    pkgs.newsflash
     cider
   ];
 }
