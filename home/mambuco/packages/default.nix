@@ -40,6 +40,15 @@ let
             --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.libsecret ]}
         '';
       });
+
+  # Upstream has no edge-margin setting; the dock pill sits 4px off the edge.
+  dash-to-dock = pkgs.gnomeExtensions.dash-to-dock.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      cat >> stylesheet.css <<'EOF'
+      #dashtodockContainer.bottom #dash { margin-bottom: 10px; }
+      EOF
+    '';
+  });
 in
 {
   home.packages = [
@@ -53,6 +62,7 @@ in
     pkgs.gnomeExtensions.media-controls
     pkgs.gnomeExtensions.top-bar-organizer
     pkgs.gnomeExtensions.activate-window-by-title  # D-Bus window raiser; used by the `nixs` fish function
+    dash-to-dock
     pkgs.libreoffice
     pkgs.telegram-desktop
     pkgs.teams-for-linux

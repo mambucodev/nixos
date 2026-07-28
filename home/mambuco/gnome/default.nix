@@ -57,7 +57,7 @@ in
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
-      workspaces-only-on-primary = false;
+      workspaces-only-on-primary = true;
       center-new-windows = true;
     };
 
@@ -117,6 +117,7 @@ in
         "mediacontrols@cliffniff.github.com"
         "top-bar-organizer@julian.gse.jsts.xyz"
         "activate-window-by-title@lucaswerkmeister.de"
+        "dash-to-dock@micxgx.gmail.com"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"
@@ -130,6 +131,22 @@ in
 
     "org/gnome/shell/extensions/user-theme" = {
       name = "gnome-catppuccin";
+    };
+
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      dock-position = "BOTTOM";
+      intellihide-mode = "ALL_WINDOWS";
+      require-pressure-to-show = false; # pressure barriers don't exist in nested sessions and are finicky on touchpads
+      dash-max-icon-size = 56;
+      running-indicator-style = "DOTS";
+      transparency-mode = "FIXED";
+      custom-background-color = true;
+      background-color = "#303446"; # Frappé base — lifts off the darker (crust) wallpaper
+      background-opacity = 0.9;
+      show-trash = false;
+      show-mounts = false;
+      click-action = "minimize-or-previews";
+      scroll-action = "cycle-windows";
     };
 
     "org/gnome/shell/extensions/mediacontrols" = {
