@@ -123,9 +123,11 @@ in
         "com.mitchellh.ghostty.desktop"
         "helium.desktop"
         "org.gnome.Nautilus.desktop"
+        "com.anthropic.Claude.desktop"
         "vesktop.desktop"
+        "teams-for-linux.desktop"
         "org.telegram.desktop.desktop"
-        "claude-desktop.desktop"
+        "cider-2.desktop"
       ];
     };
 
