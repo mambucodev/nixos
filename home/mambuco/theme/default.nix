@@ -50,6 +50,14 @@ let
     @define-color sidebar_fg_color #cad3f5;
     @define-color sidebar_backdrop_color #181926;
     @define-color sidebar_shade_color rgba(0, 0, 0, 0.25);
+    @define-color sidebar_border_color #181926;
+
+    /* Inner pane of a nested AdwNavigationSplitView (Newsflash's article list). */
+    @define-color secondary_sidebar_bg_color #1e2030;
+    @define-color secondary_sidebar_fg_color #cad3f5;
+    @define-color secondary_sidebar_backdrop_color #181926;
+    @define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.25);
+    @define-color secondary_sidebar_border_color #181926;
 
     @define-color thumbnail_bg_color #363a4f;
     @define-color thumbnail_fg_color #cad3f5;
