@@ -35,6 +35,12 @@
     settings = {
       window-width = 90;  # cells, not pixels
       window-height = 30;
+      # ssh always sends TERM in the pty request, so remote hosts get
+      # xterm-ghostty and ncurses apps (nano, htop) bail for want of the entry.
+      # ssh-terminfo installs it over infocmp/tic and caches per host; ssh-env is
+      # the fallback that downgrades TERM to xterm-256color if that fails. The
+      # full set is spelled out because this key replaces the default set.
+      shell-integration-features = "cursor,no-sudo,title,ssh-env,ssh-terminfo,path";
     };
   };
 
