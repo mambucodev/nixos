@@ -11,15 +11,22 @@
   programs.fish = {
     enable = true;
     shellAliases.hibernate = "systemctl hibernate";
-    # Open the search in zen, then raise its window. GNOME Wayland ignores an
+    # Open the search in helium, then raise its window. GNOME Wayland ignores an
     # app's own focus request without a valid activation token (which a terminal
     # launch doesn't carry), so we ask the activate-window-by-title extension to
-    # present zen's window by wm_class over D-Bus.
+    # present the window by wm_class over D-Bus. Chromium derives that class from
+    # its desktop name, and which case ozone hands to Wayland isn't worth pinning
+    # down here — try both and stop at the one that reports found.
     functions.nixs = ''
-      zen-beta "https://search.nixos.org/packages?query=$argv" &
-      gdbus call --session --dest org.gnome.Shell \
-        --object-path /de/lucaswerkmeister/ActivateWindowByTitle \
-        --method de.lucaswerkmeister.ActivateWindowByTitle.activateByWmClass zen-beta >/dev/null 2>&1
+      helium "https://search.nixos.org/packages?query=$argv" &
+      for class in Helium helium
+        set -l found (gdbus call --session --dest org.gnome.Shell \
+          --object-path /de/lucaswerkmeister/ActivateWindowByTitle \
+          --method de.lucaswerkmeister.ActivateWindowByTitle.activateByWmClass $class 2>/dev/null)
+        if string match -q '(true,)' -- "$found"
+          break
+        end
+      end
     '';
   };
 

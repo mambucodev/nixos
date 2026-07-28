@@ -17,10 +17,11 @@
     AutofillCreditCardEnabled = false;
     BackgroundModeEnabled = false;
     BookmarkBarEnabled = true;
-    # Seed for Chromium's dynamic palette, not a literal frame fill — the frame
-    # is a derived dark tone of this hue. Macchiato blue, matching the accent
-    # pinned in ../../home/mambuco/zen-browser.
-    BrowserThemeColor = "#8aadf4";
+    # No BrowserThemeColor: setting one swaps Chromium off following the GTK
+    # theme and onto a generated palette, and the seed carries no light/dark
+    # mode — the result renders light. There is no policy for the mode in this
+    # build, so following adw-gtk3-dark is both simpler and a closer catppuccin
+    # match than anything Chromium derives.
     DefaultBrowserSettingEnabled = false; # xdg.mimeApps already owns this
     DnsOverHttpsMode = "off"; # leave DNS to the system resolver (NextDNS)
     MetricsReportingEnabled = false;
