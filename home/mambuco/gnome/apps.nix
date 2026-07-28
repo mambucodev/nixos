@@ -45,7 +45,7 @@ let
   textEditor = "org.gnome.TextEditor.desktop";
   zed = "dev.zed.Zed.desktop";
   apostrophe = "org.gnome.gitlab.somas.Apostrophe.desktop";
-  zen = "zen-beta.desktop";
+  helium = "helium.desktop";
 
   assign = app: mimes: map (m: lib.nameValuePair m app) mimes;
 
@@ -154,6 +154,7 @@ let
     "x-scheme-handler/https"
     "x-scheme-handler/about"
     "x-scheme-handler/unknown"
+    "x-scheme-handler/mailto"
   ];
 in
 {
@@ -169,7 +170,7 @@ in
       ++ assign textEditor textMimes
       ++ assign zed codeMimes
       ++ assign apostrophe [ "text/markdown" ]
-      ++ assign zen browserMimes
+      ++ assign helium browserMimes
     );
   };
 

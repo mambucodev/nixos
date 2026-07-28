@@ -121,7 +121,7 @@ in
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"
-        "zen-beta.desktop"
+        "helium.desktop"
         "org.gnome.Nautilus.desktop"
         "vesktop.desktop"
         "org.telegram.desktop.desktop"

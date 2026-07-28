@@ -8,6 +8,7 @@
     ./git
     ./ssh
     ./zen-browser
+    ./helium
     ./gnome
     ./neovim
     ./zed

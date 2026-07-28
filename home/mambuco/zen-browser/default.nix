@@ -12,7 +12,7 @@ in
 
   programs.zen-browser = {
     enable = true;
-    setAsDefaultBrowser = true;
+    setAsDefaultBrowser = false;
     policies = {
       AutofillAddressEnabled = true;
       AutofillCreditCardEnabled = false;
