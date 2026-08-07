@@ -12,6 +12,9 @@
     serviceConfig = {
       Type = "oneshot";
       WorkingDirectory = "/etc/nixos";
+      # Nix's libgit2 fetcher refuses repos not owned by the calling user,
+      # and /etc/nixos belongs to mambuco — root can no longer update it.
+      User = "mambuco";
     };
 
     script = ''
