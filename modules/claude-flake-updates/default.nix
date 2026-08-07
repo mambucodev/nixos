@@ -17,7 +17,7 @@
     script = ''
       nix flake update \
         claude-code-nix \
-        claude-desktop-bin \
+        claude-desktop-extra \
         claude-cowork-service \
         nixpkgs-zed
     '';

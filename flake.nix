@@ -34,8 +34,8 @@
       };
     };
 
-    claude-desktop-bin = {
-      url = "github:patrickjaja/claude-desktop-bin";
+    claude-desktop-extra = {
+      url = "github:patrickjaja/claude-desktop-extra";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

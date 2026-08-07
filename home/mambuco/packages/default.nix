@@ -26,20 +26,8 @@ let
     buildInputs = old.buildInputs ++ [ pkgs.gst_all_1.gst-libav ];
   });
 
-  # Chromium's os_crypt dlopens libsecret-1.so.0 (never in NEEDED, so nothing
-  # links it in) to reach the Secret Service. Upstream declares it for Arch/deb/
-  # rpm but the Nix package omits it, and it discards the nixpkgs electron
-  # wrapper that would otherwise carry a library path — so safeStorage reports
-  # isEncryptionAvailable=false and the OAuth token is never persisted, which is
-  # the "sign in again after every reboot" symptom.
   claude-desktop =
-    inputs.claude-desktop-bin.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
-      (old: {
-        postFixup = (old.postFixup or "") + ''
-          wrapProgram $out/bin/claude-desktop \
-            --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.libsecret ]}
-        '';
-      });
+    inputs.claude-desktop-extra.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   # Upstream has no edge-margin setting; the dock pill sits 4px off the edge.
   dash-to-dock = pkgs.gnomeExtensions.dash-to-dock.overrideAttrs (old: {
