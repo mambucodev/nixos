@@ -6,6 +6,7 @@
     awscli2
     kubectl
     ssm-session-manager-plugin  # `aws ssm start-session`; macOS' `--cask session-manager-plugin`
+    wakeonlan
   ];
 
   programs.fish = {
