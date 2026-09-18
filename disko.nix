@@ -1,7 +1,7 @@
 # Declarative disk layout — used ONLY to partition a NEW machine, never imported
-# by the running system (freetop keeps its generated hardware-configuration.nix).
+# by the running system (Freetop keeps its generated hardware-configuration.nix).
 #
-# Reproduces freetop's layout:
+# Reproduces Freetop's layout:
 #   GPT
 #   ├─ 1G  ESP (vfat)            → /boot
 #   └─ rest LUKS2 "cryptroot"    → btrfs

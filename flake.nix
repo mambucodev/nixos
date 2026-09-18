@@ -1,5 +1,5 @@
 {
-  description = "freetop — NixOS + Home Manager flake for a single HP laptop";
+  description = "Freetop — NixOS + Home Manager flake for a single HP laptop";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
@@ -60,12 +60,12 @@
   };
 
   outputs = { self, nixpkgs, lanzaboote, home-manager, ... }@inputs: {
-    nixosConfigurations.freetop = nixpkgs.lib.nixosSystem {
-      # hostPlatform is set in hosts/freetop/hardware-configuration.nix.
+    nixosConfigurations.Freetop = nixpkgs.lib.nixosSystem {
+      # hostPlatform is set in hosts/Freetop/hardware-configuration.nix.
       specialArgs = { inherit inputs; };
 
       modules = [
-        ./hosts/freetop
+        ./hosts/Freetop
 
         lanzaboote.nixosModules.lanzaboote
 

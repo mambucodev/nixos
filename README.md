@@ -1,6 +1,6 @@
-# freetop — NixOS configuration
+# Freetop — NixOS configuration
 
-A NixOS flake for a single host, **freetop** (HP laptop, Intel, GNOME on
+A NixOS flake for a single host, **Freetop** (HP laptop, Intel, GNOME on
 Wayland). Home Manager is wired in as a NixOS module, so everything — system and
 user — is applied by one `nixos-rebuild switch`.
 
@@ -13,9 +13,9 @@ user — is applied by one `nixos-rebuild switch`.
 ## Layout
 
 ```
-flake.nix                  entry point → nixosConfigurations.freetop
+flake.nix                  entry point → nixosConfigurations.Freetop
 disko.nix                  declarative disk layout, for fresh installs only
-hosts/freetop/             the only place that knows it's "freetop"
+hosts/Freetop/             the only place that knows it's "Freetop"
   default.nix              imports modules + hardware, sets hostName/stateVersion
   hardware-configuration.nix
 modules/<name>/default.nix  one folder per system concern (boot, desktop, …)
@@ -29,12 +29,12 @@ splits `default.nix` + `apps.nix`).
 
 To add a concern: create `modules/<name>/default.nix` (or
 `home/mambuco/<name>/default.nix`) and add it to the imports list in
-`hosts/freetop/default.nix` (or `home/mambuco/default.nix`).
+`hosts/Freetop/default.nix` (or `home/mambuco/default.nix`).
 
 ## Everyday use
 
 ```bash
-sudo nixos-rebuild switch --flake /etc/nixos#freetop
+sudo nixos-rebuild switch --flake /etc/nixos#Freetop
 ```
 
 Update inputs (Claude/Zed inputs also refresh weekly via a systemd timer):
@@ -48,7 +48,7 @@ nix flake update --flake /etc/nixos
 `disko.nix` describes the whole disk declaratively — partitions, LUKS, the btrfs
 subvolumes and the swapfile — so a reinstall is a couple of commands instead of
 manual `fdisk`/`cryptsetup`/`mkfs`. It is **not** imported by the running system
-(freetop already has its disks); it is only run by the `disko` tool at install
+(Freetop already has its disks); it is only run by the `disko` tool at install
 time. `⚠️ it erases the target disk.`
 
 From the NixOS installer ISO:
@@ -72,7 +72,7 @@ sudo nixos-generate-config --no-filesystems --root /mnt
 
 # 4. put the flake in place and install
 sudo cp -r . /mnt/etc/nixos
-sudo nixos-install --flake /mnt/etc/nixos#freetop
+sudo nixos-install --flake /mnt/etc/nixos#Freetop
 
 # 5. reboot; then enroll Secure Boot keys once (lanzaboote): `sudo sbctl enroll-keys`
 ```
@@ -86,7 +86,7 @@ hardware — it is destructive by design.
 
 - `modules/networking/` sets a personal **NextDNS** resolver hostname
   (`…dns.nextdns.io`) — replace it with your own profile or a public resolver.
-- `hosts/freetop/hardware-configuration.nix` is machine-specific (disk UUIDs,
+- `hosts/Freetop/hardware-configuration.nix` is machine-specific (disk UUIDs,
   kernel modules). Regenerate it on new hardware (step 3 above).
 - SSH/vault secrets are **not** in this repo. The SSH key lives on disk
   (`~/.ssh/id_ed25519`, created manually) and is protected at rest by LUKS.

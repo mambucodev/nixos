@@ -39,7 +39,7 @@
     ../../modules/containers
   ];
 
-  networking.hostName = "freetop";
+  networking.hostName = "Freetop";
 
   system.stateVersion = "26.05";
 }

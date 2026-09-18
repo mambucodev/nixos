@@ -1,6 +1,6 @@
 # Repository overview
 
-This is a NixOS flake configuring a single host, **freetop** (HP laptop, Intel CPU, GNOME on Wayland, fish + starship). Single user: **mambuco**. NixOS 26.05.
+This is a NixOS flake configuring a single host, **Freetop** (HP laptop, Intel CPU, GNOME on Wayland, fish + starship). Single user: **mambuco**. NixOS 26.05.
 
 Home Manager is wired as a **NixOS module** (not standalone) — there is no `home-manager` CLI; everything goes through `nixos-rebuild switch`.
 
@@ -10,13 +10,13 @@ Every concern is its own **folder** with a `default.nix`. A folder gains extra
 files only when it needs sectioning (see `home/mambuco/theme/` and `.../gnome/`).
 
 ```
-flake.nix                    entry point; defines nixosConfigurations.freetop
+flake.nix                    entry point; defines nixosConfigurations.Freetop
 flake.lock
 disko.nix                    declarative disk layout; FRESH INSTALLS ONLY,
                              not imported by the running system
 README.md / LICENSE / .gitignore
-hosts/freetop/
-  default.nix                only file that knows it is "freetop";
+hosts/Freetop/
+  default.nix                only file that knows it is "Freetop";
                              imports hardware + modules, sets hostName + stateVersion
   hardware-configuration.nix
 modules/<name>/default.nix   one folder per system-level concern, e.g.
@@ -42,18 +42,18 @@ home/mambuco/<name>/         one folder per user-level concern
 
 # Conventions and patterns
 
-- **One folder per concern.** New shared concern → new `modules/<name>/default.nix`, then add `../../modules/<name>` to `hosts/freetop/default.nix` imports. New user-side concern → new `home/mambuco/<name>/default.nix`, then add `./<name>` to `home/mambuco/default.nix` imports. Split a folder into multiple files only when the concern is big enough to section.
+- **One folder per concern.** New shared concern → new `modules/<name>/default.nix`, then add `../../modules/<name>` to `hosts/Freetop/default.nix` imports. New user-side concern → new `home/mambuco/<name>/default.nix`, then add `./<name>` to `home/mambuco/default.nix` imports. Split a folder into multiple files only when the concern is big enough to section.
 - **Module shape is the standard NixOS form** — `{ config, lib, pkgs, ... }: { ... }`. Args you don't use can stay as `{ ... }:`.
 - **`inputs` is forwarded** via `specialArgs` (system) and `extraSpecialArgs` (home-manager). Any module that needs an input takes `{ inputs, ... }:` at the top.
-- **Modules don't know what host they're on.** Only `hosts/freetop/default.nix` sets `networking.hostName` and `system.stateVersion`. A second host would be a sibling directory.
+- **Modules don't know what host they're on.** Only `hosts/Freetop/default.nix` sets `networking.hostName` and `system.stateVersion`. A second host would be a sibling directory.
 - **Prefer `programs.<x>.enable` over raw packages** when home-manager has a module — the module wires shell/git integrations and config files. Add to `home.packages` only when no module exists or you only need the binary.
 - **For new programs that have a catppuccin/nix port**, enabling the program is enough — `catppuccin.autoEnable = true` is set globally, so the theme attaches automatically.
 - **GNOME tweaks all live in `home/mambuco/gnome/default.nix`** under `dconf.settings` (app-grid/mimetype/autostart tweaks are in the sibling `apps.nix`). Use `lib.hm.gvariant.mkUint32` (etc.) for typed values.
 
 # Workflow
 
-- **Apply changes:** `nixos-rebuild switch`. From inside `/etc/nixos` is fine; the flake is at `/etc/nixos/flake.nix`.
-- **Long builds (first time installing claude-desktop, bitwarden, big neovim plugin sets):** run with `&` or `run_in_background` from the agent — multiple minutes is normal.
+- **Apply changes:** `sudo nixos-rebuild switch --flake /etc/nixos#Freetop`. From inside `/etc/nixos` is fine; the flake is at `/etc/nixos/flake.nix`.
+- **Long builds (first time installing claude-desktop, bitwarden, big neovim plugin sets):** run in the background — multiple minutes is normal.
 - **First-time fish integration:** when adding any new `programs.<x>.enable` that emits fish init, the user must open a new shell (or `exec fish`) to see it.
 - **dconf changes:** apply immediately for keybindings; visual changes (accent color, GTK theme) need a GNOME logout/login.
 - **Conflict like "Existing file would be clobbered":** `home-manager.backupFileExtension = "hm-backup"` is set in `flake.nix`. Backups land next to the original with that suffix.
@@ -67,11 +67,12 @@ home/mambuco/<name>/         one folder per user-level concern
 - **Electron in nixpkgs gets marked insecure routinely.** `nixpkgs.config.permittedInsecurePackages` in `modules/nix/default.nix` already lists the version Claude Desktop depends on. If the upstream pin moves, update the version string there.
 - **fprintd on GDM**: `security.pam.services.login.fprintAuth` is set to `false` by the GDM module deliberately. Don't try to set it to `true` — it will conflict. Use `gdm-password` for graphical login and `sudo` for terminal.
 - **Claude Cowork service** runs as `systemd.user.service` `claude-cowork.service`. Socket: `$XDG_RUNTIME_DIR/cowork-vm-service.sock`. The PATH needs `claude` (the claude-code CLI) → currently passed via `services.claude-cowork.extraPath`.
+- **Antigravity CLI (`agy`) & external binaries**: `modules/nix-ld` enables `programs.nix-ld.enable = true`, providing standard glibc interpreter dynamic linking for binaries like `agy` in `~/.local/bin/`.
 
 # Adding things — quick patterns
 
 - **A new GUI app for mambuco**: add to the list in `home/mambuco/packages/default.nix`. If it has a `programs.<x>` module, add to `home/mambuco/cli/default.nix` or a new folder instead.
-- **A new system service**: new `modules/<name>/default.nix`, add `../../modules/<name>` to `hosts/freetop/default.nix` imports.
+- **A new system service**: new `modules/<name>/default.nix`, add `../../modules/<name>` to `hosts/Freetop/default.nix` imports.
 - **A new flake input** (e.g. another community flake): add under `inputs = { ... };` in `flake.nix` with `inputs.nixpkgs.follows = "nixpkgs"` to avoid duplicate nixpkgs.
 - **A new host**: `hosts/<name>/default.nix` + its own `hardware-configuration.nix`, then add `nixosConfigurations.<name> = nixpkgs.lib.nixosSystem { ... }` in `flake.nix`. Pick which `modules/<name>` apply.
 - **Reinstalling / new disk**: `disko.nix` reproduces the LUKS + btrfs-subvolume layout. It is not imported by the running system — see README.md for the install flow.
