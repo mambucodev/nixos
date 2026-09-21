@@ -1,96 +1,139 @@
-# Freetop — NixOS configuration
+# Freetop — NixOS & Home Manager Flake
 
-A NixOS flake for a single host, **Freetop** (HP laptop, Intel, GNOME on
-Wayland). Home Manager is wired in as a NixOS module, so everything — system and
-user — is applied by one `nixos-rebuild switch`.
+An opinionated, modular NixOS flake configuration managing **Freetop** (HP laptop, Intel CPU, GNOME on Wayland). Home Manager is integrated directly as a **NixOS module**, enabling unified system and user environment deployment through a single `nixos-rebuild` invocation.
 
-- **NixOS:** 26.05
-- **User:** mambuco
-- **Desktop:** GNOME / Wayland, Catppuccin Macchiato
-- **Shell:** fish + starship
-- **Disk:** LUKS2 → btrfs subvolumes, Secure Boot via lanzaboote
+---
 
-## Layout
+## 🌟 System Overview
+
+| Component | Specification |
+| :--- | :--- |
+| **OS / Branch** | NixOS `26.05` (Unstable / Rolling release track) |
+| **Target Host** | `Freetop` (HP Laptop, Intel CPU, Elan Fingerprint Reader) |
+| **Primary User** | `mambuco` |
+| **Desktop Environment** | GNOME on Wayland with Catppuccin Macchiato styling |
+| **Shell & Terminal** | Fish Shell + Starship Prompt |
+| **Storage & Security** | LUKS2 Full Disk Encryption → Btrfs subvolumes |
+| **Boot Mechanism** | UEFI `systemd-boot` + Lanzaboote (Secure Boot) |
+| **Development & CLI** | `nix-ld`, Neovim, Zed, Docker/Podman, Antigravity CLI |
+
+---
+
+## 🏗️ Architecture & Directory Layout
+
+The repository follows a strictly decoupled, concern-based module pattern. Every system module and user feature resides in its own self-contained directory containing a `default.nix`.
 
 ```
-flake.nix                  entry point → nixosConfigurations.Freetop
-disko.nix                  declarative disk layout, for fresh installs only
-hosts/Freetop/             the only place that knows it's "Freetop"
-  default.nix              imports modules + hardware, sets hostName/stateVersion
-  hardware-configuration.nix
-modules/<name>/default.nix  one folder per system concern (boot, desktop, …)
-home/mambuco/<name>/        one folder per user concern (cli, gnome, theme, …)
+/etc/nixos/
+├── flake.nix                  # Flake entrypoint & dependency declaration
+├── flake.lock                 # Pinned flake lockfile
+├── disko.nix                  # Declarative disk layout (LUKS2 + Btrfs + Swap)
+├── INSTALL.md                 # Detailed step-by-step installation guide
+├── hosts/
+│   └── Freetop/               # Host-specific configuration & hardware pin
+│       ├── default.nix        # Module imports, hostName, stateVersion
+│       └── hardware-configuration.nix
+├── modules/                   # System-level NixOS modules (one folder per concern)
+│   ├── android/               # ADB & fastboot udev rules
+│   ├── antigravity-flake-updates/ # Automated flake updating systemd timers
+│   ├── audio/                 # PipeWire sound server & Bluetooth audio codecs
+│   ├── avahi/                 # mDNS / DNS-SD local network resolution
+│   ├── bluetooth/             # BlueZ stack & Blueman manager
+│   ├── boot/                  # Lanzaboote Secure Boot & systemd-boot
+│   ├── chromium-policies/    # Enterprise browser policies
+│   ├── containers/            # Docker & Podman container runtimes
+│   ├── desktop/               # GNOME Desktop, GDM display manager, Wayland
+│   ├── fingerprint/           # Elan moc2 libfprint overlay & fprintd PAM setup
+│   ├── fonts/                 # System font profiles (Noto, Fira Code, JetBrains Mono)
+│   ├── hardware/              # TLP power management, thermald, Intel graphics
+│   ├── hibernation/           # Swap offset & suspend/hibernate policies
+│   ├── kdeconnect/            # GSConnect / KDE Connect desktop integration
+│   ├── locale/                # Locale (en_GB), Timezone (Rome), Keyboard (IT)
+│   ├── maintenance/           # Automatic Nix store optimization & garbage collection
+│   ├── network-displays/      # Miracast / Wi-Fi Display support
+│   ├── networking/            # NetworkManager, NextDNS resolver, OpenSSH
+│   ├── nix/                   # Flake settings, unfree packages, insecurity overrides
+│   ├── nix-ld/                # Dynamic loader shim for unpatched glibc binaries
+│   ├── ollama/                # Local LLM runner daemon service
+│   ├── oomd/                  # systemd-oomd low-memory management
+│   ├── plymouth/              # Graphical boot splash theme
+│   ├── shell/                 # System-wide shell initialization
+│   ├── steam/                 # Steam gaming environment, Proton, 32-bit drivers
+│   ├── syncthing/             # Continuous peer-to-peer file synchronization
+│   ├── tailscale/             # Mesh VPN service daemon
+│   ├── users/                 # System user accounts & privileges
+│   ├── xpad/                  # Linux kernel drivers for Xbox controllers
+│   └── zed-overlay/           # Nixpkgs master overlay for bleeding-edge Zed editor
+└── home/
+    └── mambuco/               # User-level Home Manager modules
+        ├── default.nix        # Main home aggregator module
+        ├── budslink/          # Galaxy Buds control integration
+        ├── chromium/          # Web browser configuration
+        ├── cli/               # Modern CLI tools (btop, eza, bat, rg, fd, fzf, zoxide)
+        ├── dev/               # Development toolchains & language environments
+        ├── discord-rpc/       # Discord Rich Presence integration
+        ├── fastfetch/         # System information fetch display tool
+        ├── git/               # Git configuration, delta diff viewer, aliases
+        ├── gnome/             # dconf settings, keybindings, extensions, app grid
+        ├── helium/            # Helium browser module
+        ├── neovim/            # Custom Neovim configuration (LSP, Treesitter, Telescope)
+        ├── packages/          # GUI & CLI application suite (Bitwarden, Cider, Claude, agy)
+        ├── ssh/               # User SSH configuration
+        ├── theme/             # GTK adw-gtk3, Catppuccin palette, Bibata cursors
+        ├── vesktop/           # Custom Discord client wrapper
+        ├── zed/               # Zed editor settings & extensions
+        └── zen-browser/       # Zen Browser module with Catppuccin styling
 ```
 
-Every concern is its own folder with a `default.nix`. A folder gains extra files
-only when a concern is big enough to section (e.g. `home/mambuco/theme/` splits
-into `default.nix` + `gnome-catppuccin.nix` + `cursor.nix`; `home/mambuco/gnome/`
-splits `default.nix` + `apps.nix`).
+---
 
-To add a concern: create `modules/<name>/default.nix` (or
-`home/mambuco/<name>/default.nix`) and add it to the imports list in
-`hosts/Freetop/default.nix` (or `home/mambuco/default.nix`).
+## 📦 System & User Capabilities
 
-## Everyday use
+### 🔧 Core System Services
+- **Secure Boot & Bootloader:** `lanzaboote` replaces standard `systemd-boot` to enforce UEFI Secure Boot validation.
+- **Networking & DNS:** NetworkManager paired with NextDNS encrypted DNS resolver (`DNSOverTLS`).
+- **Power & Thermal Optimization:** Integrated `TLP` and `thermald` tuning for battery life and thermal control on HP Intel hardware.
+- **Unpatched Binary Compatibility:** `programs.nix-ld` enables running dynamic glibc precompiled binaries (`~/.local/bin/` tools, standalone executables) without manual `patchelf`.
+- **Custom Hardware Support:** `depau-libfprint` overlay adds driver support for Elan `04f3:0c5e` fingerprint sensors.
 
+### 🎨 User Environment & Customizations
+- **Integrated Home Manager:** Configured via `home-manager.nixosModules.home-manager` in `flake.nix`. Home configurations apply automatically during system rebuilds.
+- **Theming System:** Catppuccin Macchiato color theme applied across GNOME, GTK apps (`adw-gtk3`), terminals, and web browsers via `catppuccin/nix`.
+- **Shell Experience:** Interactive `fish` shell pre-configured with `starship` prompt, `zoxide` directory jump, `eza` file listings, `bat` syntax highlighting, `fzf`, `rg`, and `lazygit`.
+
+---
+
+## 🛠️ Operating & Maintaining the System
+
+### Apply Configuration Changes
+Rebuild and activate the system configuration:
 ```bash
 sudo nixos-rebuild switch --flake /etc/nixos#Freetop
 ```
 
-Update inputs (Claude/Zed inputs also refresh weekly via a systemd timer):
-
+### Update System & Application Flakes
+Update all inputs in `flake.lock`:
 ```bash
 nix flake update --flake /etc/nixos
 ```
+*(Note: A background systemd timer in `modules/antigravity-flake-updates` automatically keeps fast-moving flake inputs updated).*
 
-## Installing on a new machine (disko)
-
-`disko.nix` describes the whole disk declaratively — partitions, LUKS, the btrfs
-subvolumes and the swapfile — so a reinstall is a couple of commands instead of
-manual `fdisk`/`cryptsetup`/`mkfs`. It is **not** imported by the running system
-(Freetop already has its disks); it is only run by the `disko` tool at install
-time. `⚠️ it erases the target disk.`
-
-From the NixOS installer ISO:
-
+### Test Configuration Without Switching
+Build the configuration and verify syntax before applying:
 ```bash
-# 0. get this repo (git clone … or copy it onto the installer)
-
-# 1. point disko.nix at the target disk if it isn't /dev/nvme0n1
-lsblk
-$EDITOR disko.nix          # set disk.main.device
-
-# 2. partition + format + mount everything under /mnt (prompts for the LUKS
-#    passphrase). This is the destructive step.
-sudo nix --experimental-features "nix-command flakes" \
-  run github:nix-community/disko/latest -- \
-  --mode destroy,format,mount ./disko.nix
-
-# 3. generate hardware-configuration.nix for THIS machine (disko already made
-#    the filesystems, so keep them out of the generated file)
-sudo nixos-generate-config --no-filesystems --root /mnt
-
-# 4. put the flake in place and install
-sudo cp -r . /mnt/etc/nixos
-sudo nixos-install --flake /mnt/etc/nixos#Freetop
-
-# 5. reboot; then enroll Secure Boot keys once (lanzaboote): `sudo sbctl enroll-keys`
+nixos-rebuild build --flake /etc/nixos#Freetop
 ```
 
-What each disko mode does: `destroy` wipes existing partitions, `format` writes
-the new partition table + filesystems, `mount` mounts them under `/mnt` ready for
-`nixos-install`. Test changes to `disko.nix` in a VM before trusting them on real
-hardware — it is destructive by design.
+---
 
-## Notes for anyone reusing this
+## 🚀 Fresh Installation & Host Setup
 
-- `modules/networking/` sets a personal **NextDNS** resolver hostname
-  (`…dns.nextdns.io`) — replace it with your own profile or a public resolver.
-- `hosts/Freetop/hardware-configuration.nix` is machine-specific (disk UUIDs,
-  kernel modules). Regenerate it on new hardware (step 3 above).
-- SSH/vault secrets are **not** in this repo. The SSH key lives on disk
-  (`~/.ssh/id_ed25519`, created manually) and is protected at rest by LUKS.
+For comprehensive step-by-step instructions on partitioning disks with `disko`, setting up LUKS encryption, configuring new host definitions, and performing a fresh system installation, refer to:
 
-## License
+👉 **[INSTALL.md](./INSTALL.md)**
 
-MIT — see [LICENSE](./LICENSE).
+---
+
+## 📜 License
+
+Distributed under the [MIT License](./LICENSE).
