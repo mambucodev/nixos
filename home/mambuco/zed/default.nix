@@ -39,7 +39,9 @@ let
       cp bin/zed "$out/bin/zed"
 
       ln -s "$out/bin/zed" "$out/bin/zeditor"
-      ln -sf "$out/share/applications/dev.zed.Zed-Preview.desktop" "$out/share/applications/dev.zed.Zed.desktop"
+      mv "$out/share/applications/dev.zed.Zed-Preview.desktop" "$out/share/applications/dev.zed.Zed.desktop"
+      substituteInPlace "$out/share/applications/dev.zed.Zed.desktop" \
+        --replace-fail "Name=Zed Preview" "Name=Zed"
 
       wrapProgram "$out/libexec/zed-editor" \
         --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [ pkgs.vulkan-loader pkgs.libGL pkgs.wayland ]}"
