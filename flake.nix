@@ -45,7 +45,7 @@
     };
 
     watch-proximity = {
-      url = "path:/home/mambuco/Projects/watch-proximity";
+      url = "github:mambucodev/wearos-proximity";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

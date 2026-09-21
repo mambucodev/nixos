@@ -371,14 +371,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1790022070,
-        "narHash": "sha256-dnpnMYoGiSJdh5e5FGBzXOY7qW5GAtbaGkLZus8rbJk=",
-        "path": "/home/mambuco/Projects/watch-proximity",
-        "type": "path"
+        "lastModified": 1790022503,
+        "narHash": "sha256-WVAMeL/doe4BmJnRGBLcUGvugZNzHiHS3MLzT1xVwt0=",
+        "owner": "mambucodev",
+        "repo": "wearos-proximity",
+        "rev": "47a50ad4cf556d5a71c2b3233aa9a10858ac9fc6",
+        "type": "github"
       },
       "original": {
-        "path": "/home/mambuco/Projects/watch-proximity",
-        "type": "path"
+        "owner": "mambucodev",
+        "repo": "wearos-proximity",
+        "type": "github"
       }
     },
     "zen-browser": {
