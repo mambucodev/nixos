@@ -371,8 +371,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1790019574,
-        "narHash": "sha256-PkNif+Uwi6BtP6FlOv63LHntRpff04kWALJXihbwmss=",
+        "lastModified": 1790020490,
+        "narHash": "sha256-a+XFVL9/FyWX4VVliMYpV6Iu4exdUiT+nzngguzs7eY=",
         "path": "/home/mambuco/Projects/watch-proximity",
         "type": "path"
       },
