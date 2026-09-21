@@ -18,6 +18,7 @@
     ./discord-rpc
     ./dev
     ./budslink
+    ./bt-proximity-lock
   ];
 
   home.username = "mambuco";
