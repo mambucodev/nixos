@@ -26,7 +26,7 @@ modules/<name>/default.nix   one folder per system-level concern, e.g.
   desktop/                   xserver + gdm + gnome + printing + libinput
   nix/                       experimental-features, allowUnfree, permittedInsecurePackages
   fingerprint/               libfprint elanmoc2 overlay + fprintd + PAM
-  antigravity-flake-updates/ systemd timer updating antigravity and zed flakes
+  antigravity-flake-updates/ systemd timer updating antigravity flake
   …                          (audio, shell, users, hibernation, steam, …)
 home/mambuco/<name>/         one folder per user-level concern
   default.nix                aggregator; imports the rest; sets username + stateVersion

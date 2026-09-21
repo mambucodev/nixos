@@ -17,7 +17,6 @@
     ../../modules/nix
     ../../modules/nix-ld
     ../../modules/fingerprint
-    ../../modules/zed-overlay
     ../../modules/antigravity-flake-updates
     ../../modules/maintenance
     ../../modules/hardware

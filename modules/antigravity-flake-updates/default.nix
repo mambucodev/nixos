@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
 {
-  # Weekly refresh of fast-moving flake inputs (antigravity, nixpkgs-zed).
+  # Weekly refresh of fast-moving flake inputs (antigravity).
   systemd.services.antigravity-flake-update = {
-    description = "Refresh Antigravity and Zed flake inputs in /etc/nixos";
+    description = "Refresh Antigravity flake input in /etc/nixos";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
 
@@ -17,13 +17,12 @@
 
     script = ''
       nix flake update \
-        antigravity \
-        nixpkgs-zed
+        antigravity
     '';
   };
 
   systemd.timers.antigravity-flake-update = {
-    description = "Weekly refresh of Antigravity and Zed flake inputs";
+    description = "Weekly refresh of Antigravity flake input";
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "weekly";

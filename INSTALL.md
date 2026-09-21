@@ -77,7 +77,6 @@ Use this approach if you want to define a new hostname (e.g., `MyLaptop` or `Wor
        ../../modules/nix
        ../../modules/nix-ld
        ../../modules/fingerprint        # Remove if target lacks Elan fingerprint sensor
-       ../../modules/zed-overlay
        ../../modules/antigravity-flake-updates
        ../../modules/maintenance
        ../../modules/hardware

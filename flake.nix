@@ -4,9 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-    # 26.05 lags Zed; modules/zed-overlay pulls just zed-editor from master.
-    nixpkgs-zed.url = "github:NixOS/nixpkgs/master";
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";

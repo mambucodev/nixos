@@ -62,8 +62,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
 │   ├── syncthing/             # Continuous peer-to-peer file synchronization
 │   ├── tailscale/             # Mesh VPN service daemon
 │   ├── users/                 # System user accounts & privileges
-│   ├── xpad/                  # Linux kernel drivers for Xbox controllers
-│   └── zed-overlay/           # Nixpkgs master overlay for bleeding-edge Zed editor
+│   └── xpad/                  # Linux kernel drivers for Xbox controllers
 └── home/
     └── mambuco/               # User-level Home Manager modules
         ├── default.nix        # Main home aggregator module
