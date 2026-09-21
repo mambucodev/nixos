@@ -18,10 +18,7 @@
     ../../modules/nix-ld
     ../../modules/fingerprint
     ../../modules/zed-overlay
-    ../../modules/claude-code
-    ../../modules/claude-cowork
-    ../../modules/claude-flake-updates
-    ../../modules/claude
+    ../../modules/antigravity-flake-updates
     ../../modules/maintenance
     ../../modules/hardware
     ../../modules/oomd

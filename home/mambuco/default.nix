@@ -17,7 +17,6 @@
     ./vesktop
     ./discord-rpc
     ./dev
-    ./claude
     ./budslink
   ];
 

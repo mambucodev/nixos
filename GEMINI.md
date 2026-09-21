@@ -26,18 +26,17 @@ modules/<name>/default.nix   one folder per system-level concern, e.g.
   desktop/                   xserver + gdm + gnome + printing + libinput
   nix/                       experimental-features, allowUnfree, permittedInsecurePackages
   fingerprint/               libfprint elanmoc2 overlay + fprintd + PAM
-  claude/                    /root theme mirror (+ themes/ asset)
+  antigravity-flake-updates/ systemd timer updating antigravity and zed flakes
   …                          (audio, shell, users, hibernation, steam, …)
 home/mambuco/<name>/         one folder per user-level concern
   default.nix                aggregator; imports the rest; sets username + stateVersion
-  packages/                  GUI apps via home.packages (bitwarden, claude-desktop, cider, …)
+  packages/                  GUI & CLI apps via home.packages (bitwarden, antigravity-cli, cider, …)
   cli/                       programs.<x>.enable for btop/eza/bat/rg/fd/fzf/zoxide/lazygit/gh
   git/                       programs.git with delta + aliases + ignores
   zen-browser/               zen module + policies (+ catppuccin/ CSS assets)
   gnome/                     default.nix = dconf.settings; apps.nix = mimeapps/autostart/hidden
   neovim/                    programs.neovim with LSP, treesitter, telescope, cmp
   theme/                     default.nix + gnome-catppuccin.nix + cursor.nix
-  claude/                    programs.claude-code + Claude Desktop theme asset
 ```
 
 # Conventions and patterns

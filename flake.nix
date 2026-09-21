@@ -34,19 +34,8 @@
       };
     };
 
-    claude-desktop-extra = {
-      url = "github:patrickjaja/claude-desktop-extra";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    claude-cowork-service = {
-      url = "github:patrickjaja/claude-cowork-service";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # claude-code in 26.05 lags upstream by weeks; this flake tracks the CDN.
-    claude-code-nix = {
-      url = "github:sadjow/claude-code-nix";
+    antigravity = {
+      url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

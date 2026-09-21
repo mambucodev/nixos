@@ -26,8 +26,8 @@ let
     buildInputs = old.buildInputs ++ [ pkgs.gst_all_1.gst-libav ];
   });
 
-  claude-desktop =
-    inputs.claude-desktop-extra.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  antigravity-cli =
+    inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli;
 
   # Upstream has no edge-margin setting; the dock pill sits 4px off the edge.
   dash-to-dock = pkgs.gnomeExtensions.dash-to-dock.overrideAttrs (old: {
@@ -44,7 +44,7 @@ in
     pkgs.apostrophe
     clapper
     pkgs.bitwarden-desktop
-    claude-desktop
+    antigravity-cli
     pkgs.gnomeExtensions.hibernate-status-button
     pkgs.gnomeExtensions.appindicator
     pkgs.gnomeExtensions.media-controls
@@ -59,6 +59,11 @@ in
     pkgs.figma-linux
     pkgs.cartero
     pkgs.newsflash
+    (pkgs.obsidian.overrideAttrs (old: {
+      postFixup = (old.postFixup or "") + ''
+        echo "StartupWMClass=obsidian" >> $out/share/applications/obsidian.desktop
+      '';
+    }))
     cider
   ];
 }

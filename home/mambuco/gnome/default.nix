@@ -2,6 +2,7 @@
 
 let
   inherit (lib.hm.gvariant) mkUint32;
+  wallpaper = "file://${./wallpaper.png}";
 in
 {
   imports = [ ./apps.nix ];
@@ -22,13 +23,13 @@ in
     };
 
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/mambuco/Pictures/Wallpapers/nix-black-4k.png";
-      picture-uri-dark = "file:///home/mambuco/Pictures/Wallpapers/nix-black-4k.png";
+      picture-uri = wallpaper;
+      picture-uri-dark = wallpaper;
       picture-options = "zoom";
     };
 
     "org/gnome/desktop/screensaver" = {
-      picture-uri = "file:///home/mambuco/Pictures/Wallpapers/nix-black-4k.png";
+      picture-uri = wallpaper;
       picture-options = "zoom";
     };
 

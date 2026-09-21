@@ -8,44 +8,46 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "vmd" "nvme" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "vmd" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Root filesystem
   fileSystems."/" =
-    { device = "/dev/mapper/cryptroot";
+    { device = "/dev/mapper/luks-0abadf3f-6ef6-4c6c-81e3-7d442351a313";
       fsType = "btrfs";
-      options = [ "subvol=root" ];
     };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/06e1da0e-eaf8-4b4e-8e0a-416b10f789ef";
+  # Encrypted root partition mapping
+  boot.initrd.luks.devices."luks-0abadf3f-6ef6-4c6c-81e3-7d442351a313".device = "/dev/disk/by-uuid/0abadf3f-6ef6-4c6c-81e3-7d442351a313";
 
-  fileSystems."/nix" =
-    { device = "/dev/mapper/cryptroot";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
+  # Btrfs Subvolumes
   fileSystems."/home" =
-    { device = "/dev/mapper/cryptroot";
+    { device = "/dev/mapper/luks-0abadf3f-6ef6-4c6c-81e3-7d442351a313";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
-  fileSystems."/.swapvol" =
-    { device = "/dev/mapper/cryptroot";
+  fileSystems."/nix" =
+    { device = "/dev/mapper/luks-0abadf3f-6ef6-4c6c-81e3-7d442351a313";
       fsType = "btrfs";
-      options = [ "subvol=swap" ];
+      options = [ "subvol=nix" ];
     };
 
+  # EFI Boot partition
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/EF60-6E7B";
+    { device = "/dev/disk/by-uuid/76D4-FF16";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices = [{ device = "/.swapvol/swapfile"; }];
+  # Encrypted swap partition mapping & device
+  boot.initrd.luks.devices."luks-55909935-cc54-46ed-8bbf-47d8c7decaa5".device = "/dev/disk/by-uuid/55909935-cc54-46ed-8bbf-47d8c7decaa5";
+
+  swapDevices =
+    [ { device = "/dev/mapper/luks-55909935-cc54-46ed-8bbf-47d8c7decaa5"; }
+    ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
