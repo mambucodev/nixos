@@ -1,7 +1,0 @@
-{
-  "uuid": "bt-proximity-toggle@mambuco",
-  "name": "Bluetooth Proximity Lock Toggle",
-  "description": "Quick Settings toggle to pause and resume the Bluetooth proximity screen locker",
-  "shell-version": [ "45", "46", "47", "48", "49", "50" ],
-  "version": 1
-}

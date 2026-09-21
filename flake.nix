@@ -43,6 +43,11 @@
       url = "git+https://gitlab.freedesktop.org/depau/libfprint.git?ref=elanmoc2";
       flake = false;
     };
+
+    watch-proximity = {
+      url = "path:/home/mambuco/Projects/watch-proximity";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, lanzaboote, home-manager, ... }@inputs: {

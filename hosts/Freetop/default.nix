@@ -33,6 +33,7 @@
     ../../modules/android
     ../../modules/kdeconnect
     ../../modules/containers
+    ../../modules/watch-proximity
   ];
 
   networking.hostName = "Freetop";
