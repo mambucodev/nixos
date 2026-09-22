@@ -371,11 +371,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790058512,
-        "narHash": "sha256-Tp9OKW/ZCTFtO7d+yzpi43QFqzcBApjNix2FUz7cp98=",
+        "lastModified": 1790061875,
+        "narHash": "sha256-sMesObIHc5f6giGasKlmrdnanc8ip8A/VfHGDbzzMvo=",
         "owner": "mambucodev",
         "repo": "wearos-proximity",
-        "rev": "9ad08ec9f683172a40e8198b416595cf4ada35c7",
+        "rev": "37af699efa04cef96ad34d8ae08862b513e7ac5c",
         "type": "github"
       },
       "original": {
