@@ -115,7 +115,7 @@ in
         "com.mitchellh.ghostty.desktop"
         "helium.desktop"
         "org.gnome.Nautilus.desktop"
-        "com.anthropic.Claude.desktop"
+        "antigravity.desktop"
         "vesktop.desktop"
         "teams-for-linux.desktop"
         "org.telegram.desktop.desktop"
