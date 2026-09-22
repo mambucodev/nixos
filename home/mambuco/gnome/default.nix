@@ -96,6 +96,7 @@ in
     };
 
     "org/gnome/shell" = {
+      always-show-log-out = true;
       disable-user-extensions = false;
       # hibernate-status@dromi only declares GNOME ≤48; force-load it on 50.
       disable-extension-version-validation = true;
