@@ -19,6 +19,7 @@
     ./dev
     ./budslink
     ./watch-proximity
+    ./spotify
   ];
 
   home.username = "mambuco";

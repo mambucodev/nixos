@@ -3,7 +3,7 @@
 {
   # Bridges an MPRIS player's "now playing" into Discord via Vesktop's arRPC
   # socket. Allowlist-only (empty = every player); match the MPRIS Identity
-  # (`music-discord-rpc -l`). Cider is excluded — it has native Rich Presence.
+  # (`music-discord-rpc -l`).
   systemd.user.services.music-discord-rpc = {
     Unit = {
       Description = "MPRIS -> Discord rich presence";

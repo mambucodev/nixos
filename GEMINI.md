@@ -30,7 +30,7 @@ modules/<name>/default.nix   one folder per system-level concern, e.g.
   …                          (audio, shell, users, hibernation, steam, …)
 home/mambuco/<name>/         one folder per user-level concern
   default.nix                aggregator; imports the rest; sets username + stateVersion
-  packages/                  GUI & CLI apps via home.packages (bitwarden, antigravity-cli, cider, …)
+  packages/                  GUI & CLI apps via home.packages (bitwarden, antigravity, spotify, …)
   cli/                       programs.<x>.enable for btop/eza/bat/rg/fd/fzf/zoxide/lazygit/gh
   git/                       programs.git with delta + aliases + ignores
   zen-browser/               zen module + policies (+ catppuccin/ CSS assets)
@@ -51,8 +51,7 @@ home/mambuco/<name>/         one folder per user-level concern
 
 # Workflow
 
-- **Apply changes:** `sudo nixos-rebuild switch --flake /etc/nixos#Freetop`. From inside `/etc/nixos` is fine; the flake is at `/etc/nixos/flake.nix`.
-- **Long builds (first time installing claude-desktop, bitwarden, big neovim plugin sets):** run in the background — multiple minutes is normal.
+- **The user applies changes:** `sudo nixos-rebuild switch`.
 - **First-time fish integration:** when adding any new `programs.<x>.enable` that emits fish init, the user must open a new shell (or `exec fish`) to see it.
 - **dconf changes:** apply immediately for keybindings; visual changes (accent color, GTK theme) need a GNOME logout/login.
 - **Conflict like "Existing file would be clobbered":** `home-manager.backupFileExtension = "hm-backup"` is set in `flake.nix`. Backups land next to the original with that suffix.
@@ -79,7 +78,11 @@ home/mambuco/<name>/         one folder per user-level concern
 
 # Style for AI agents working here
 
+- **NEVER run `nixos-rebuild`**: Do not invoke `nixos-rebuild` (`switch`, `boot`, `test`, or `build`). You only prepare configurations, edit code, and tell the user when they can rebuild.
+- **NEVER run `sudo`**: Agents must never invoke `sudo`.
+- **Always stage new files (`git add`)**: Nix flakes ignore untracked files. Whenever creating a new file or directory, stage it with `git add <path>` so Nix can evaluate it.
+- **Verify safely via pure evaluation**: To test your changes without building or mutating system state, run:
+  `nix eval .#nixosConfigurations.Freetop.config.system.build.toplevel.drvPath`
 - Keep changes minimal — don't refactor neighboring code when adding a thing.
 - Don't write comments unless explaining a non-obvious *why*. The patterns above are the convention; the code reads itself.
 - Don't add backup-compatibility shims for replaced/removed options.
-- For long builds, run in background and report back. Don't sit waiting.

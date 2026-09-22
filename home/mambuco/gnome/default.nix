@@ -119,7 +119,7 @@ in
         "vesktop.desktop"
         "teams-for-linux.desktop"
         "org.telegram.desktop.desktop"
-        "cider-2.desktop"
+        "spotify.desktop"
       ];
     };
 
@@ -154,7 +154,6 @@ in
       left-box-order = [ "activities" "Media Controls" "BudsLink-Companion@maniacx.github.com" ];
       center-box-order = [ "dateMenu" ];
       right-box-order = [
-        "appindicator-kstatusnotifieritem-Cider_status_icon_1"
         "appindicator-kstatusnotifieritem-Claude_status_icon_1"
         "appindicator-kstatusnotifieritem-teams-for-linux_status_icon_1"
         "appindicator-kstatusnotifieritem-chrome_status_icon_1"

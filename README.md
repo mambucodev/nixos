@@ -76,7 +76,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
         ├── gnome/             # dconf settings, keybindings, extensions, app grid
         ├── helium/            # Helium browser module
         ├── neovim/            # Custom Neovim configuration (LSP, Treesitter, Telescope)
-        ├── packages/          # GUI & CLI application suite (Bitwarden, Cider, Claude, agy)
+        ├── packages/          # GUI & CLI application suite (Bitwarden, Spotify, Claude, agy)
         ├── ssh/               # User SSH configuration
         ├── theme/             # GTK adw-gtk3, Catppuccin palette, Bibata cursors
         ├── vesktop/           # Custom Discord client wrapper
