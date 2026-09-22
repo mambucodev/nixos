@@ -61,7 +61,7 @@ in
     pkgs.newsflash
     (pkgs.obsidian.overrideAttrs (old: {
       postFixup = (old.postFixup or "") + ''
-        echo "StartupWMClass=obsidian" >> $out/share/applications/obsidian.desktop
+        echo "StartupWMClass=md.obsidian.Obsidian" >> $out/share/applications/obsidian.desktop
       '';
     }))
     cider
