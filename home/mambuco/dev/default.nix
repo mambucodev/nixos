@@ -17,9 +17,9 @@
     # other languages
     bun
     deno
-    nodejs_22
-    yarn
-    jdk21
+    nodejs
+    yarn-berry
+    jdk25
     gradle
 
     # python
@@ -33,7 +33,7 @@
     cmake
     gnumake
     gdb
-    pkg-config
+    pkgconf
 
     # dev utilities
     git-filter-repo

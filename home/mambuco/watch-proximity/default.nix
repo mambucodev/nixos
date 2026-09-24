@@ -15,7 +15,7 @@
     tolerance = 5;
     autoWake = true;
     pauseMedia = true;
-    resumeMedia = true;
+    resumeMedia = false;
     antiTheft = true;
   };
 }

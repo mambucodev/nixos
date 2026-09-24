@@ -3,13 +3,13 @@
 let
   budslink = pkgs.stdenv.mkDerivation rec {
     pname = "budslink";
-    version = "0.1.5";
+    version = "0.2.1";
 
     src = pkgs.fetchFromGitHub {
       owner = "maniacx";
       repo = "BudsLink";
       rev = "v${version}";
-      sha256 = "054w9jwxfp1r7vyzi2qz9z2kv60n1c68i2vfjm5j50ngcsx0avkp";
+      sha256 = "01ydjxcbkf3m5f0bkj9mzh1bg2vhrvfnf57n5aa82nkxafcp5rbc";
     };
 
     nativeBuildInputs = with pkgs; [
