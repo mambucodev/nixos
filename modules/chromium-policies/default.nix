@@ -28,6 +28,8 @@
       "cjpalhdlnbpafiamejdnhcphjbkeiagm;https://clients2.google.com/service/update2/crx"
       # Bitwarden
       "nngceckbapebfimnlniiiahkandclblb;https://clients2.google.com/service/update2/crx"
+      # Catppuccin Chrome Theme - Macchiato
+      "cjheeejmjodmhhgbmmghbldlmmcbjojg;https://clients2.google.com/service/update2/crx"
     ];
     MetricsReportingEnabled = false;
     PasswordManagerEnabled = false; # Bitwarden owns logins
