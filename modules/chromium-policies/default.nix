@@ -16,7 +16,6 @@
     AutofillAddressEnabled = true;
     AutofillCreditCardEnabled = false;
     BackgroundModeEnabled = false;
-    BookmarkBarEnabled = true;
     # No BrowserThemeColor: setting one swaps Chromium off following the GTK
     # theme and onto a generated palette, and the seed carries no light/dark
     # mode — the result renders light. There is no policy for the mode in this
@@ -24,6 +23,12 @@
     # match than anything Chromium derives.
     DefaultBrowserSettingEnabled = false; # xdg.mimeApps already owns this
     DnsOverHttpsMode = "off"; # leave DNS to the system resolver (NextDNS)
+    ExtensionInstallForcelist = [
+      # uBlock Origin
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm;https://clients2.google.com/service/update2/crx"
+      # Bitwarden
+      "nngceckbapebfimnlniiiahkandclblb;https://clients2.google.com/service/update2/crx"
+    ];
     MetricsReportingEnabled = false;
     PasswordManagerEnabled = false; # Bitwarden owns logins
     PromotionalTabsEnabled = false;
