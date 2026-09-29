@@ -4,7 +4,7 @@ An opinionated, modular NixOS flake configuration managing **Freetop** (HP lapto
 
 ---
 
-## 🌟 System Overview
+## System Overview
 
 | Component | Specification |
 | :--- | :--- |
@@ -19,7 +19,7 @@ An opinionated, modular NixOS flake configuration managing **Freetop** (HP lapto
 
 ---
 
-## 🏗️ Architecture & Directory Layout
+## Architecture & Directory Layout
 
 The repository follows a strictly decoupled, concern-based module pattern. Every system module and user feature resides in its own self-contained directory containing a `default.nix`.
 
@@ -86,23 +86,23 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
 
 ---
 
-## 📦 System & User Capabilities
+## System & User Capabilities
 
-### 🔧 Core System Services
+### Core System Services
 - **Secure Boot & Bootloader:** `lanzaboote` replaces standard `systemd-boot` to enforce UEFI Secure Boot validation.
 - **Networking & DNS:** NetworkManager paired with NextDNS encrypted DNS resolver (`DNSOverTLS`).
 - **Power & Thermal Optimization:** Integrated `TLP` and `thermald` tuning for battery life and thermal control on HP Intel hardware.
 - **Unpatched Binary Compatibility:** `programs.nix-ld` enables running dynamic glibc precompiled binaries (`~/.local/bin/` tools, standalone executables) without manual `patchelf`.
 - **Custom Hardware Support:** `depau-libfprint` overlay adds driver support for Elan `04f3:0c5e` fingerprint sensors.
 
-### 🎨 User Environment & Customizations
+### User Environment & Customizations
 - **Integrated Home Manager:** Configured via `home-manager.nixosModules.home-manager` in `flake.nix`. Home configurations apply automatically during system rebuilds.
 - **Theming System:** Catppuccin Macchiato color theme applied across GNOME, GTK apps (`adw-gtk3`), terminals, and web browsers via `catppuccin/nix`.
 - **Shell Experience:** Interactive `fish` shell pre-configured with `starship` prompt, `zoxide` directory jump, `eza` file listings, `bat` syntax highlighting, `fzf`, `rg`, and `lazygit`.
 
 ---
 
-## 🛠️ Operating & Maintaining the System
+## Operating & Maintaining the System
 
 ### Apply Configuration Changes
 Rebuild and activate the system configuration:
@@ -125,7 +125,7 @@ nixos-rebuild build --flake /etc/nixos#Freetop
 
 ---
 
-## 🚀 Fresh Installation & Host Setup
+## Fresh Installation & Host Setup
 
 For comprehensive step-by-step instructions on partitioning disks with `disko`, setting up LUKS encryption, configuring new host definitions, and performing a fresh system installation, refer to:
 
@@ -133,6 +133,13 @@ For comprehensive step-by-step instructions on partitioning disks with `disko`, 
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the [MIT License](./LICENSE).
+
+
+## Credits
+
+Thanks to [Informa](https://www.immjs.dev/) for this beautiful wallpaper!
+
+![Wallpaper](home/mambuco/gnome/wallpaper.jpg)
