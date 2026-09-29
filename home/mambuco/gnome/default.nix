@@ -2,7 +2,7 @@
 
 let
   inherit (lib.hm.gvariant) mkUint32;
-  wallpaper = "file://${./wallpaper.png}";
+  wallpaper = "file://${./wallpaper.jpg}";
 in
 {
   imports = [ ./apps.nix ];
