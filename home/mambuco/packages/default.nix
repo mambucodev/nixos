@@ -41,6 +41,7 @@ in
     pkgs.figma-linux
     pkgs.cartero
     pkgs.newsflash
+    pkgs.fragments
     (pkgs.obsidian.overrideAttrs (old: {
       postFixup = (old.postFixup or "") + ''
         echo "StartupWMClass=md.obsidian.Obsidian" >> $out/share/applications/obsidian.desktop

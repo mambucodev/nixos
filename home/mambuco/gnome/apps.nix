@@ -46,6 +46,7 @@ let
   zed = "dev.zed.Zed.desktop";
   apostrophe = "org.gnome.gitlab.somas.Apostrophe.desktop";
   helium = "helium.desktop";
+  fragments = "de.haeckerfelix.Fragments.desktop";
 
   assign = app: mimes: map (m: lib.nameValuePair m app) mimes;
 
@@ -156,6 +157,11 @@ let
     "x-scheme-handler/unknown"
     "x-scheme-handler/mailto"
   ];
+
+  torrentMimes = [
+    "application/x-bittorrent"
+    "x-scheme-handler/magnet"
+  ];
 in
 {
   home.file = builtins.listToAttrs (map hideEntry hiddenApps);
@@ -171,6 +177,7 @@ in
       ++ assign zed codeMimes
       ++ assign apostrophe [ "text/markdown" ]
       ++ assign helium browserMimes
+      ++ assign fragments torrentMimes
     );
   };
 

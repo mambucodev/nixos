@@ -24,4 +24,7 @@
   environment.systemPackages = [ pkgs.openvpn ];
 
   services.openssh.enable = true;
+
+  # Allow Next.js / dev server on local network
+  networking.firewall.allowedTCPPorts = [ 3000 ];
 }
