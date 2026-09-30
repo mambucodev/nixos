@@ -24,8 +24,6 @@
     DefaultBrowserSettingEnabled = false; # xdg.mimeApps already owns this
     DnsOverHttpsMode = "off"; # leave DNS to the system resolver (NextDNS)
     ExtensionInstallForcelist = [
-      # uBlock Origin
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm;https://clients2.google.com/service/update2/crx"
       # Bitwarden
       "nngceckbapebfimnlniiiahkandclblb;https://clients2.google.com/service/update2/crx"
       # Catppuccin Chrome Theme - Macchiato
