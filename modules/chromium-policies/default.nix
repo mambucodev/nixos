@@ -23,12 +23,6 @@
     # match than anything Chromium derives.
     DefaultBrowserSettingEnabled = false; # xdg.mimeApps already owns this
     DnsOverHttpsMode = "off"; # leave DNS to the system resolver (NextDNS)
-    ExtensionInstallForcelist = [
-      # Bitwarden
-      "nngceckbapebfimnlniiiahkandclblb;https://clients2.google.com/service/update2/crx"
-      # Catppuccin Chrome Theme - Macchiato
-      "cmpdlhmnmjhihmcfnigoememnffkimlk;https://clients2.google.com/service/update2/crx"
-    ];
     MetricsReportingEnabled = false;
     PasswordManagerEnabled = false; # Bitwarden owns logins
     PromotionalTabsEnabled = false;
