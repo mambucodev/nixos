@@ -18,9 +18,9 @@
     ./discord-rpc
     ./dev
     ./budslink
-    ./watch-proximity
     ./spotify
     ./stamp
+    ./claude
   ];
 
   home.username = "mambuco";

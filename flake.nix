@@ -36,17 +36,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # claude-code in 26.05 lags upstream by weeks; this flake tracks the CDN.
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     catppuccin.url = "github:catppuccin/nix";
 
     # elanmoc2 branch: adds this laptop's Elan 04f3:0c5e fingerprint reader.
     depau-libfprint = {
       url = "git+https://gitlab.freedesktop.org/depau/libfprint.git?ref=elanmoc2";
       flake = false;
-    };
-
-    watch-proximity = {
-      url = "github:mambucodev/wearos-proximity";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     spicetify-nix = {

@@ -110,7 +110,6 @@ in
         "top-bar-organizer@julian.gse.jsts.xyz"
         "activate-window-by-title@lucaswerkmeister.de"
         "dash-to-dock@micxgx.gmail.com"
-        "watch-proximity@mambuco"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"

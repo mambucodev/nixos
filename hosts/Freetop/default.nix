@@ -17,6 +17,7 @@
     ../../modules/nix
     ../../modules/nix-ld
     ../../modules/fingerprint
+    ../../modules/claude-code
     ../../modules/antigravity-flake-updates
     ../../modules/maintenance
     ../../modules/hardware
@@ -33,7 +34,6 @@
     ../../modules/android
     ../../modules/kdeconnect
     ../../modules/containers
-    ../../modules/watch-proximity
   ];
 
   networking.hostName = "Freetop";

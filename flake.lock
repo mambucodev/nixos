@@ -39,6 +39,27 @@
         "type": "github"
       }
     },
+    "claude-code-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1791071338,
+        "narHash": "sha256-YBAFoulgm9qEavWtmb2gHwk7lgpVZL7vtr4+yi6H3UU=",
+        "owner": "sadjow",
+        "repo": "claude-code-nix",
+        "rev": "b17e42820330bd34ab890632c2f6f80daf4e517f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sadjow",
+        "repo": "claude-code-nix",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1781825982,
@@ -90,24 +111,6 @@
     "flake-utils": {
       "inputs": {
         "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -270,13 +273,13 @@
       "inputs": {
         "antigravity": "antigravity",
         "catppuccin": "catppuccin",
+        "claude-code-nix": "claude-code-nix",
         "depau-libfprint": "depau-libfprint",
         "helium": "helium",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs_2",
         "spicetify-nix": "spicetify-nix",
-        "watch-proximity": "watch-proximity",
         "zen-browser": "zen-browser"
       }
     },
@@ -306,7 +309,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1790025920,
@@ -384,7 +387,7 @@
     },
     "utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -397,27 +400,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "watch-proximity": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1790062024,
-        "narHash": "sha256-09rtJ5DZAucu4RD49GMtmgH32nGmeTkSnSv/aVBdfiQ=",
-        "owner": "mambucodev",
-        "repo": "wearos-proximity",
-        "rev": "cc9b34593fbe99eec82926daf1a4698e0be85eb0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mambucodev",
-        "repo": "wearos-proximity",
         "type": "github"
       }
     },

@@ -34,6 +34,7 @@ in
     pkgs.gnomeExtensions.activate-window-by-title  # D-Bus window raiser; used by the `nixs` fish function
     dash-to-dock
     pkgs.libreoffice
+    pkgs.signal-desktop
     pkgs.telegram-desktop
     pkgs.teams-for-linux
     pkgs.proton-vpn

@@ -17,12 +17,13 @@
 
     script = ''
       nix flake update \
-        antigravity
+        antigravity \
+        claude-code-nix
     '';
   };
 
   systemd.timers.antigravity-flake-update = {
-    description = "Weekly refresh of Antigravity flake input";
+    description = "Weekly refresh of fast-moving flake inputs";
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "weekly";
