@@ -19,7 +19,9 @@ in
       enable-hot-corners = false;
       cursor-theme = "breeze_cursors";
       cursor-size = 24;
-      monospace-font-name = "JetBrainsMono Nerd Font 11";
+      font-name = "Geist 11";
+      document-font-name = "Geist 11";
+      monospace-font-name = "Geist Mono 11";
     };
 
     "org/gnome/desktop/background" = {
@@ -43,6 +45,7 @@ in
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";
       focus-mode = "click";
+      titlebar-font = "Geist Bold 11";
     };
 
     "org/gnome/mutter" = {
