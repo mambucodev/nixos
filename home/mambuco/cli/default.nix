@@ -68,4 +68,5 @@
 
   programs.lazygit.enable = true;
   programs.gh.enable = true;
+  programs.rclone.enable = true;
 }
