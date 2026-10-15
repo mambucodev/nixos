@@ -238,6 +238,17 @@ in
       X-GNOME-Autostart-enabled=true
     '';
 
+    "autostart/packet.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Packet
+      Exec=packet --background
+      StartupNotify=false
+      Terminal=false
+      Icon=io.github.nozwock.Packet
+      X-GNOME-Autostart-enabled=true
+    '';
+
     "autostart/spotify.desktop".text = ''
       [Desktop Entry]
       Type=Application

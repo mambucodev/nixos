@@ -33,6 +33,7 @@
     ../../modules/xpad
     ../../modules/android
     ../../modules/kdeconnect
+    ../../modules/packet
     ../../modules/containers
   ];
 
