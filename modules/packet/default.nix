@@ -13,10 +13,11 @@ in
     settings."io/github/nozwock/Packet" = {
       enable-static-port = true;
       static-port-number = lib.gvariant.mkInt32 port;
-      # The login entry itself is home/mambuco/gnome/apps.nix; these keep the
-      # in-app toggles in sync and keep it alive when the window is closed.
+      # Keeps it alive when the window is closed. auto-start stays off so the
+      # portal doesn't write a duplicate entry next to the one in
+      # home/mambuco/gnome/apps.nix.
       run-in-background = true;
-      auto-start = true;
+      auto-start = false;
     };
   }];
 

@@ -194,27 +194,7 @@ in
       X-GNOME-Autostart-enabled=true
     '';
 
-    "autostart/bitwarden.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Bitwarden
-      Exec=bitwarden --hidden
-      StartupNotify=false
-      Terminal=false
-      Icon=bitwarden
-      X-GNOME-Autostart-enabled=true
-    '';
 
-    "autostart/teams-for-linux.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Microsoft Teams for Linux
-      Exec=teams-for-linux --minimized
-      StartupNotify=false
-      Terminal=false
-      Icon=teams-for-linux
-      X-GNOME-Autostart-enabled=true
-    '';
 
     "autostart/newsflash.desktop".text = ''
       [Desktop Entry]
@@ -238,7 +218,10 @@ in
       X-GNOME-Autostart-enabled=true
     '';
 
-    "autostart/packet.desktop".text = ''
+    # Not packet.desktop: that's the name xdg-desktop-portal's Background API
+    # uses, and auto-start is off in modules/packet so the portal removes its
+    # own copy. Two entries means a second launch, which re-presents the window.
+    "autostart/packet-background.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=Packet
