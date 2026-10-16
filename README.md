@@ -27,7 +27,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
 /etc/nixos/
 ├── flake.nix                  # Flake entrypoint & dependency declaration
 ├── flake.lock                 # Pinned flake lockfile
-├── disko.nix                  # Declarative disk layout (LUKS2 + Btrfs + Swap)
+├── disko.nix                  # Declarative disk layout (LUKS2 Btrfs + LUKS2 swap)
 ├── INSTALL.md                 # Detailed step-by-step installation guide
 ├── hosts/
 │   └── Freetop/               # Host-specific configuration & hardware pin
@@ -46,7 +46,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
 │   ├── fingerprint/           # Elan moc2 libfprint overlay & fprintd PAM setup
 │   ├── fonts/                 # System font profiles (Noto, Fira Code, JetBrains Mono)
 │   ├── hardware/              # TLP power management, thermald, Intel graphics
-│   ├── hibernation/           # Swap offset & suspend/hibernate policies
+│   ├── hibernation/           # Resume-from-swap & suspend/hibernate policies
 │   ├── kdeconnect/            # GSConnect / KDE Connect desktop integration
 │   ├── locale/                # Locale (en_GB), Timezone (Rome), Keyboard (IT)
 │   ├── maintenance/           # Automatic Nix store optimization & garbage collection

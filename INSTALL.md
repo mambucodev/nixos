@@ -134,9 +134,9 @@ Use this approach if you want to define a new hostname (e.g., `MyLaptop` or `Wor
 ## 3. Disk Partitioning & Formatting (Disko)
 
 `disko.nix` declaratively provisions the drive with:
-- **ESP Partition (512M):** FAT32 formatted for UEFI boot.
-- **LUKS2 Partition:** AES-256 encrypted container.
-- **Btrfs Subvolumes inside LUKS:** `@root` (`/`), `@home` (`/home`), `@nix` (`/nix`), `@log` (`/var/log`), and `@swap` (swapfile).
+- **ESP Partition (1G):** FAT32 formatted for UEFI boot.
+- **LUKS2 Swap Partition (17G):** encrypted swap; hibernation resumes from it. Size it to at least the machine's RAM.
+- **LUKS2 Root Partition (rest):** Btrfs with subvolumes `root` (`/`), `nix` (`/nix`), and `home` (`/home`).
 
 > ⚠️ **WARNING:** Disko is destructive and will erase all data on the target drive!
 
@@ -147,7 +147,7 @@ Use this approach if you want to define a new hostname (e.g., `MyLaptop` or `Wor
    *Common targets: `/dev/nvme0n1` or `/dev/sda`.*
 
 2. **Update `disko.nix` disk target:**
-   Edit line 7 of `disko.nix` to match your target drive path:
+   Edit the `device` line in `disko.nix` to match your target drive path:
    ```nix
    main = {
      type = "disk";
@@ -170,9 +170,9 @@ Use this approach if you want to define a new hostname (e.g., `MyLaptop` or `Wor
 Now that the target filesystems are mounted at `/mnt`, generate the host-specific hardware configuration file.
 
 1. **Generate hardware settings:**
-   Use `--no-filesystems` so filesystem mounts remain managed by `disko`:
+   `disko.nix` is not imported by the system, so let it detect the mounts, LUKS devices, and swap from `/mnt`:
    ```bash
-   sudo nixos-generate-config --no-filesystems --root /mnt
+   sudo nixos-generate-config --root /mnt
    ```
 
 2. **Copy generated hardware config to host folder:**

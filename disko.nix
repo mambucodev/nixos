@@ -1,17 +1,18 @@
 # Declarative disk layout — used ONLY to partition a NEW machine, never imported
-# by the running system (Freetop keeps its generated hardware-configuration.nix).
+# by the running system (each host keeps its generated hardware-configuration.nix).
 #
-# Reproduces Freetop's layout:
+# Mirrors Freetop's layout:
 #   GPT
-#   ├─ 1G  ESP (vfat)            → /boot
-#   └─ rest LUKS2 "cryptroot"    → btrfs
-#         ├─ subvol root         → /
-#         ├─ subvol nix          → /nix
-#         ├─ subvol home         → /home
-#         └─ subvol swap         → /.swapvol  (16G swapfile, enables hibernation)
+#   ├─ 1G   ESP (vfat)             → /boot
+#   ├─ 17G  LUKS2 "cryptswap"      → swap (hibernation resumes from here)
+#   └─ rest LUKS2 "cryptroot"      → btrfs
+#         ├─ subvol root           → /
+#         ├─ subvol nix            → /nix
+#         └─ subvol home           → /home
 #
+# Swap must be at least the machine's RAM for hibernation; bump the size if needed.
 # Set `device` to the target disk (lsblk). Everything on it is DESTROYED.
-# See README.md → "Installing on a new machine" for the full flow.
+# See INSTALL.md for the full flow.
 {
   disko.devices = {
     disk.main = {
@@ -31,8 +32,21 @@
               mountOptions = [ "fmask=0077" "dmask=0077" ];
             };
           };
-          luks = {
-            label = "disk-main-luks";
+          swap = {
+            label = "disk-main-swap";
+            size = "17G";
+            content = {
+              type = "luks";
+              name = "cryptswap";
+              settings.allowDiscards = true;
+              content = {
+                type = "swap";
+                resumeDevice = true;
+              };
+            };
+          };
+          root = {
+            label = "disk-main-root";
             size = "100%";
             content = {
               type = "luks";
@@ -47,10 +61,6 @@
                   "/root" = { mountpoint = "/"; };
                   "/nix"  = { mountpoint = "/nix"; };
                   "/home" = { mountpoint = "/home"; };
-                  "/swap" = {
-                    mountpoint = "/.swapvol";
-                    swap.swapfile.size = "16G";
-                  };
                 };
               };
             };
