@@ -127,7 +127,7 @@ in
       transparency-mode = "FIXED";
       custom-background-color = true;
       background-color = "#24273a"; # Macchiato base — lifts off the darker (crust) wallpaper
-      background-opacity = 0.9;
+      background-opacity = 0.6; # translucent so blur-my-shell's blur shows through the tint
       show-trash = false;
       show-mounts = false;
       click-action = "minimize-or-previews";
@@ -142,12 +142,23 @@ in
       show-track-slider = true;
     };
 
-    # Panel and dock default to on and would override their themed backgrounds.
+    # Panel defaults to on and would override its themed background.
     "org/gnome/shell/extensions/blur-my-shell/overview".blur = true;
     "org/gnome/shell/extensions/blur-my-shell/lockscreen".blur = true;
     "org/gnome/shell/extensions/blur-my-shell/screenshot".blur = true;
     "org/gnome/shell/extensions/blur-my-shell/panel".blur = false;
-    "org/gnome/shell/extensions/blur-my-shell/dash-to-dock".blur = false;
+
+    # Blur only underneath: override-background would swap dash-to-dock's
+    # Macchiato base for blur-my-shell's grey presets. The rounded pipeline's
+    # 24px corners match dash-to-dock's bottom pill. Static is enough since
+    # intellihide keeps the dock off windows.
+    "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {
+      blur = true;
+      override-background = false;
+      pipeline = "pipeline_default_rounded";
+      static-blur = true;
+      unblur-in-overview = false;
+    };
 
     "org/gnome/shell/extensions/top-bar-organizer" = {
       left-box-order = [ "activities" "Media Controls" "BudsLink-Companion@maniacx.github.com" ];
