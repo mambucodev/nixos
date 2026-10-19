@@ -97,7 +97,6 @@ in
         "gsconnect@andyholmes.github.io"
         "appindicatorsupport@rgcjonas.gmail.com"
         "mediacontrols@cliffniff.github.com"
-        "top-bar-organizer@julian.gse.jsts.xyz"
         "activate-window-by-title@lucaswerkmeister.de"
         "dash-to-dock@micxgx.gmail.com"
         "clipboard-indicator@tudmotu.com"
@@ -136,9 +135,10 @@ in
 
     "org/gnome/shell/extensions/mediacontrols" = {
       extension-position = "Left";
-      extension-index = mkUint32 0;
+      extension-index = mkUint32 1;
       label-width = mkUint32 160;
       fixed-label-width = false;
+      show-track-slider = true;
     };
 
     "org/gnome/shell/extensions/top-bar-organizer" = {
