@@ -10,7 +10,24 @@ let
     inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system};
 
   # Upstream has no edge-margin setting; the dock pill sits 4px off the edge.
+  # nixpkgs' v105 touches the overview while GNOME 50's startup animation runs;
+  # v106+ waits for startup-complete. Not v110: it regressed intellihide
+  # (upstream #2756, #2757, #2760).
   dash-to-dock = pkgs.gnomeExtensions.dash-to-dock.overrideAttrs (old: {
+    version = "109";
+    src = pkgs.fetchzip {
+      url = "https://extensions.gnome.org/extension-data/dash-to-dockmicxgx.gmail.com.v109.shell-extension.zip";
+      hash = "sha256-dfSNDQBSYuLca4aC/1F4qxreTv28rNLpLv809NCIDgY=";
+      stripRoot = false;
+    };
+    # Without the stock bottom dash the window-picker workspace fills the whole
+    # width, hiding its neighbours (upstream #2588); fixed in v110.
+    patches = [
+      (pkgs.fetchpatch {
+        url = "https://github.com/micheleg/dash-to-dock/commit/2ecb8383.patch";
+        hash = "sha256-B74URnbQIagAOzq0u0c5uH8mZh6EVgcS8orhSPZcyZE=";
+      })
+    ];
     postPatch = (old.postPatch or "") + ''
       cat >> stylesheet.css <<'EOF'
       #dashtodockContainer.bottom #dash { margin-bottom: 10px; }
