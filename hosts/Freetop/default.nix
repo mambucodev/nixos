@@ -37,6 +37,12 @@
     ../../modules/containers
   ];
 
+  boot.initrd.luks.devices = {
+    "luks-0abadf3f-6ef6-4c6c-81e3-7d442351a313".crypttabExtraOpts = [ "tpm2-device=auto" ];
+    "luks-55909935-cc54-46ed-8bbf-47d8c7decaa5".crypttabExtraOpts = [ "tpm2-device=auto" ];
+  };
+  security.tpm2.enable = true;
+
   networking.hostName = "Freetop";
 
   system.stateVersion = "26.05";
