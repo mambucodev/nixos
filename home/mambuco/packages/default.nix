@@ -89,6 +89,7 @@ in
     pkgs.gnomeExtensions.top-bar-organizer
     pkgs.gnomeExtensions.clipboard-indicator
     pkgs.gnomeExtensions.caffeine
+    pkgs.gnomeExtensions.blur-my-shell
     pkgs.gnomeExtensions.activate-window-by-title  # D-Bus window raiser; used by the `nixs` fish function
     dash-to-dock
     pkgs.libreoffice

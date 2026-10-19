@@ -101,6 +101,7 @@ in
         "dash-to-dock@micxgx.gmail.com"
         "clipboard-indicator@tudmotu.com"
         "caffeine@patapon.info"
+        "blur-my-shell@aunetx"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"
@@ -125,7 +126,7 @@ in
       running-indicator-style = "DOTS";
       transparency-mode = "FIXED";
       custom-background-color = true;
-      background-color = "#303446"; # Frappé base — lifts off the darker (crust) wallpaper
+      background-color = "#24273a"; # Macchiato base — lifts off the darker (crust) wallpaper
       background-opacity = 0.9;
       show-trash = false;
       show-mounts = false;
@@ -140,6 +141,13 @@ in
       fixed-label-width = false;
       show-track-slider = true;
     };
+
+    # Panel and dock default to on and would override their themed backgrounds.
+    "org/gnome/shell/extensions/blur-my-shell/overview".blur = true;
+    "org/gnome/shell/extensions/blur-my-shell/lockscreen".blur = true;
+    "org/gnome/shell/extensions/blur-my-shell/screenshot".blur = true;
+    "org/gnome/shell/extensions/blur-my-shell/panel".blur = false;
+    "org/gnome/shell/extensions/blur-my-shell/dash-to-dock".blur = false;
 
     "org/gnome/shell/extensions/top-bar-organizer" = {
       left-box-order = [ "activities" "Media Controls" "BudsLink-Companion@maniacx.github.com" ];
