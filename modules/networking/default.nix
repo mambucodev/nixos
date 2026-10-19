@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   networking.networkmanager.enable = true;
@@ -14,9 +14,11 @@
   # The NextDNS profile ID is a secret this public repo must not carry. It goes
   # in /etc/systemd/resolved.conf.d/50-nextdns.conf, hand-copied from the
   # .example below (shipped here, inert for systemd) — rebuilds never touch it.
-  environment.etc."systemd/resolved.conf.d/50-nextdns.conf.example".text = ''
+  # The "<host>-" prefix makes NextDNS log this machine as a named device.
+  environment.etc."systemd/resolved.conf.d/50-nextdns.conf.example".text =
+    let sni = "${config.networking.hostName}-PROFILE.dns.nextdns.io"; in ''
     [Resolve]
-    DNS=45.90.28.0#PROFILE.dns.nextdns.io 2a07:a8c0::#PROFILE.dns.nextdns.io 45.90.30.0#PROFILE.dns.nextdns.io 2a07:a8c1::#PROFILE.dns.nextdns.io
+    DNS=45.90.28.0#${sni} 2a07:a8c0::#${sni} 45.90.30.0#${sni} 2a07:a8c1::#${sni}
     DNSOverTLS=yes
     Domains=~.
   '';
