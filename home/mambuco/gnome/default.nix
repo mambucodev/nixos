@@ -5,7 +5,7 @@ let
   wallpaper = "file://${./wallpaper.jpg}";
 in
 {
-  imports = [ ./apps.nix ];
+  imports = [ ./apps.nix ./keybindings.nix ];
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
@@ -85,19 +85,6 @@ in
       show-hidden = false;
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      home = [ "<Super>e" ];
-      custom-keybindings = [
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-      ];
-    };
-
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>t";
-      command = "ghostty";
-      name = "Open Ghostty";
-    };
-
     "org/gnome/shell" = {
       always-show-log-out = true;
       disable-user-extensions = false;
@@ -113,14 +100,14 @@ in
         "top-bar-organizer@julian.gse.jsts.xyz"
         "activate-window-by-title@lucaswerkmeister.de"
         "dash-to-dock@micxgx.gmail.com"
+        "clipboard-indicator@tudmotu.com"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"
         "helium.desktop"
         "org.gnome.Nautilus.desktop"
-        "antigravity.desktop"
         "vesktop.desktop"
-        "teams-for-linux.desktop"
+        "obsidian.desktop"
         "org.telegram.desktop.desktop"
         "spotify.desktop"
       ];
