@@ -257,6 +257,59 @@ If your hardware supports fingerprint authentication (e.g., Elan 04f3:0c5e senso
 fprintd-enroll
 ```
 
+### 6. TPM2 Auto-Unlock of the Encrypted Disk (Optional)
+With Secure Boot enforced, the TPM can unlock both LUKS volumes (`cryptroot` and `cryptswap`) at boot so no passphrase is needed. The key is sealed to **PCR 7** (Secure Boot state + enrolled keys): if Secure Boot gets disabled, the keys change, or someone boots an unsigned image, the TPM refuses and you are asked for the passphrase as usual.
+
+> ⚠️ Do this **after** step 2. PCR 7 changes when Secure Boot keys are enrolled, so enrolling the TPM before that would seal to the wrong state.
+
+1. **Check that a TPM2 chip is available:**
+   ```bash
+   systemd-cryptenroll --tpm2-device=list
+   ```
+   If nothing is listed, enable the TPM (often called *Intel PTT* or *Security Chip*) in the firmware setup.
+
+2. **Tell the initrd to try the TPM.** The systemd initrd (`boot.initrd.systemd.enable` in `modules/boot`) already ships TPM2 support; each LUKS device just needs `tpm2-device=auto`. The device names are the UUID-based ones from the host's `hardware-configuration.nix`, so add this to `hosts/<host>/default.nix` (not to the regenerated hardware file):
+   ```nix
+   boot.initrd.luks.devices = {
+     "luks-<root-uuid>".crypttabExtraOpts = [ "tpm2-device=auto" ];
+     "luks-<swap-uuid>".crypttabExtraOpts = [ "tpm2-device=auto" ];
+   };
+   ```
+   Optionally add `security.tpm2.enable = true;` to get `tpm2-tools` and the `tss` group in the running system. Then `sudo nixos-rebuild switch`.
+
+3. **Find the LUKS partitions:**
+   ```bash
+   lsblk -o NAME,FSTYPE,UUID,MOUNTPOINTS
+   ```
+   The two `crypto_LUKS` partitions are the ones to enroll: the one holding `btrfs` is root, the one holding `swap` is swap. Their UUIDs are the same ones in the `luks-<uuid>` names of `hardware-configuration.nix`. Partition numbering differs between installs (disko puts swap on `p2`, the graphical installer may put it on `p3`), so the commands below use `/dev/disk/by-uuid/`.
+
+4. **Enroll the TPM on both volumes** (you are asked for the existing passphrase each time):
+   ```bash
+   sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-uuid/<root-uuid>
+   sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-uuid/<swap-uuid>
+   ```
+   Both must be enrolled: hibernation resumes from the encrypted swap, so the initrd has to unlock it too. Add `--tpm2-with-pin=yes` if you want a short PIN at boot instead of fully unattended unlock.
+
+5. **Keep a fallback.** The original passphrase stays in its keyslot — don't remove it. Optionally also add a recovery key and store it offline (e.g. in Bitwarden):
+   ```bash
+   sudo systemd-cryptenroll --recovery-key /dev/disk/by-uuid/<root-uuid>
+   ```
+
+6. **Verify and reboot:**
+   ```bash
+   sudo systemd-cryptenroll /dev/disk/by-uuid/<root-uuid>   # lists keyslots; expect "password" and "tpm2"
+   sudo reboot
+   ```
+   The system should go straight to GDM without the LUKS prompt.
+
+**Re-enrolling:** firmware updates or changes to the Secure Boot keys (`sbctl enroll-keys`) alter PCR 7, and you'll get the passphrase prompt again. Unlock with the passphrase, then wipe and re-create the TPM slot on each volume:
+```bash
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-uuid/<root-uuid>
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-uuid/<swap-uuid>
+```
+
+> **Security trade-off:** without a PIN, anyone holding the laptop can boot it to the login screen; disk confidentiality then rests on your user password and Secure Boot. Use `--tpm2-with-pin=yes` if that's not acceptable.
+
 ---
 
 ## 7. Troubleshooting & Gotchas
