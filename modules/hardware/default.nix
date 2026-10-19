@@ -11,4 +11,9 @@
 
   services.fwupd.enable = true;
   services.power-profiles-daemon.enable = true;
+
+  # The DPTF skin/VRM sensors (SEN1/SEN2) trip at 80 °C and the EC hard-cuts
+  # power, while the kernel never throttles on them. thermald reads the DPTF
+  # tables and throttles the CPU before that point.
+  services.thermald.enable = true;
 }
