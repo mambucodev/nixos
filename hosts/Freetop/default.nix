@@ -10,6 +10,7 @@
     ../../modules/locale
     ../../modules/desktop
     ../../modules/gnome-catppuccin
+    ../../modules/catppuccin
     ../../modules/chromium-policies
     ../../modules/fonts
     ../../modules/audio

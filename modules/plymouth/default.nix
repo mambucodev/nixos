@@ -1,25 +1,13 @@
 { pkgs, ... }:
 
-let
-  # Pull only the "dna" theme instead of the full ~524M adi1090x collection,
-  # rewriting the absolute paths baked into its .plymouth file.
-  dnaBase = pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "dna" ]; };
-
-  dnaTheme = pkgs.runCommand "plymouth-theme-dna-nixos" { } ''
-    theme=$out/share/plymouth/themes/dna
-    mkdir -p $out/share/plymouth/themes
-    cp -r ${dnaBase}/share/plymouth/themes/dna $theme
-    chmod -R u+w $theme
-
-    sed -i "s,${dnaBase}/share/plymouth/themes/dna,$theme,g" $theme/dna.plymouth
-  '';
-in
 {
+  # Stock bgrt: firmware (HP) logo + GNOME spinner, with the NixOS logo as the
+  # bottom watermark (static, unlike nixos-bgrt's low-res spinning one).
   boot.plymouth = {
     enable = true;
-    themePackages = [ dnaTheme ];
-    theme = "dna";
+    logo = "${pkgs.nixos-icons}/share/icons/hicolor/96x96/apps/nix-snowflake-white.png";
   };
+  catppuccin.plymouth.enable = false;
 
   # Quiet boot so the splash isn't drowned in kernel/udev logs.
   boot.consoleLogLevel = 0;

@@ -9,6 +9,10 @@
   # confirmed workaround on sibling models (EliteBook 840/845 G8).
   boot.kernelParams = [ "iommu=pt" ];
 
+  # Early KMS: plymouth ignores simpledrm and waits for a real DRM device, so
+  # without i915 in the initrd the splash only shows up after switch-root.
+  boot.initrd.kernelModules = [ "i915" ];
+
   services.fwupd.enable = true;
   services.power-profiles-daemon.enable = true;
 
