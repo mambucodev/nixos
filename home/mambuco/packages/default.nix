@@ -32,6 +32,7 @@ in
     pkgs.gnomeExtensions.media-controls
     pkgs.gnomeExtensions.top-bar-organizer
     pkgs.gnomeExtensions.clipboard-indicator
+    pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.activate-window-by-title  # D-Bus window raiser; used by the `nixs` fish function
     dash-to-dock
     pkgs.libreoffice
