@@ -14,3 +14,6 @@ result-*
 
 # local, machine-specific Claude Code settings (permissions etc.)
 .claude/settings.local.json
+
+# Claude Code agent worktrees
+.claude/worktrees/
