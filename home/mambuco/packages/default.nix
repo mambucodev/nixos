@@ -17,6 +17,42 @@ let
       EOF
     '';
   });
+
+  # GNOME disables extensions on lock, taking down the StatusNotifierWatcher;
+  # apps hidden in the tray (Spotify) then re-show their window on unlock.
+  # Stay alive in unlock-dialog, but hide the icons there: the shell only hides
+  # its own indicators, so tray menus would otherwise work on the lock screen.
+  appindicator = pkgs.gnomeExtensions.appindicator.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace metadata.json --replace-fail \
+        '"settings-schema":' \
+        '"session-modes": ["user", "unlock-dialog"], "settings-schema":'
+
+      substituteInPlace indicatorStatusIcon.js --replace-fail \
+        "settings.get_string('tray-pos'));" \
+        "settings.get_string('tray-pos'));
+          statusIcon.container.visible = !Main.sessionMode.isLocked;"
+
+      substituteInPlace extension.js \
+        --replace-fail \
+          "import * as Extension from" \
+          "import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+          import * as Extension from" \
+        --replace-fail \
+          "TrayIconsManager.TrayIconsManager.initialize();" \
+          "TrayIconsManager.TrayIconsManager.initialize();
+          this._sessionModeId = Main.sessionMode.connect('updated', () => {
+              for (const [role, indicator] of Object.entries(Main.panel.statusArea)) {
+                  if (role.startsWith('appindicator-'))
+                      indicator.container.visible = !Main.sessionMode.isLocked;
+              }
+          });" \
+        --replace-fail \
+          "TrayIconsManager.TrayIconsManager.destroy();" \
+          "TrayIconsManager.TrayIconsManager.destroy();
+          Main.sessionMode.disconnect(this._sessionModeId);"
+    '';
+  });
 in
 {
   home.packages = [
@@ -29,7 +65,8 @@ in
     antigravity.google-antigravity-ide
     antigravity.google-antigravity-cli
     pkgs.gnomeExtensions.hibernate-status-button
-    pkgs.gnomeExtensions.appindicator
+    appindicator
+    pkgs.gjs # appindicator spawns `gjs` to rediscover tray icons already on the bus
     pkgs.gnomeExtensions.media-controls
     pkgs.gnomeExtensions.top-bar-organizer
     pkgs.gnomeExtensions.clipboard-indicator
