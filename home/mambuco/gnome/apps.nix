@@ -231,17 +231,5 @@ in
       Icon=io.github.nozwock.Packet
       X-GNOME-Autostart-enabled=true
     '';
-
-    "autostart/spotify.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Spotify
-      GenericName=Music Player
-      Exec=spotify %U
-      StartupNotify=false
-      Terminal=false
-      Icon=spotify-client
-      X-GNOME-Autostart-enabled=true
-    '';
   };
 }
