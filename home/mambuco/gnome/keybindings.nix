@@ -3,11 +3,11 @@
 let
   launchers = [
     { name = "Ghostty"; binding = "<Super>t"; command = "ghostty"; }
-    { name = "Helium"; binding = "<Super>b"; command = "helium"; }
-    { name = "Obsidian"; binding = "<Super>o"; command = "obsidian"; }
-    { name = "Settings"; binding = "<Super>i"; command = "gnome-control-center"; }
-    { name = "Calendar"; binding = "<Super>c"; command = "gnome-calendar"; }
-    { name = "Mission Center"; binding = "<Control><Shift>Escape"; command = "missioncenter"; }
+    { name = "Helium"; binding = "<Super>b"; command = "helium"; focus = [ "Helium" "helium" ]; }
+    { name = "Obsidian"; binding = "<Super>o"; command = "obsidian"; focus = [ "md.obsidian.Obsidian" "obsidian" ]; }
+    { name = "Settings"; binding = "<Super>i"; command = "gnome-control-center"; focus = [ "org.gnome.Settings" ]; }
+    { name = "Calendar"; binding = "<Super>c"; command = "gnome-calendar"; focus = [ "org.gnome.Calendar" ]; }
+    { name = "Mission Center"; binding = "<Control><Shift>Escape"; command = "missioncenter"; focus = [ "io.missioncenter.MissionCenter" ]; }
     { name = "btop"; binding = "<Super><Shift>t"; command = "ghostty -e btop"; }
     { name = "Keybindings"; binding = "<Super>less"; command = "${toggleCheatsheet}"; }
   ];
@@ -92,6 +92,17 @@ let
       || exec ${cheatsheet}/bin/keybindings-cheatsheet
   '';
 
+  # Raises an existing window (by WM class, via the activate-window-by-title extension) instead of opening another.
+  focusOrLaunch = l: pkgs.writeShellScript "focus-or-launch-${lib.toLower (lib.replaceStrings [ " " ] [ "-" ] l.name)}" ''
+    for class in ${lib.escapeShellArgs l.focus}; do
+      found=$(${lib.getExe' pkgs.glib "gdbus"} call --session --dest org.gnome.Shell \
+        --object-path /de/lucaswerkmeister/ActivateWindowByTitle \
+        --method de.lucaswerkmeister.ActivateWindowByTitle.activateByWmClass "$class" 2>/dev/null)
+      [ "$found" = "(true,)" ] && exit
+    done
+    exec ${l.command}
+  '';
+
   emptyBinding = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
 
   customPath = i: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${toString i}/";
@@ -146,7 +157,8 @@ in
     };
   } // lib.listToAttrs (lib.imap0 (i: l:
     lib.nameValuePair (lib.removeSuffix "/" (lib.removePrefix "/" (customPath i))) {
-      inherit (l) binding command;
+      inherit (l) binding;
+      command = if l ? focus then "${focusOrLaunch l}" else l.command;
       name = "Open ${l.name}";
     }) launchers);
 }
