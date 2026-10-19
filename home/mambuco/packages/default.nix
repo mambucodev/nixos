@@ -21,6 +21,7 @@ in
 {
   home.packages = [
     pkgs.sshfs
+    pkgs.wl-clipboard  # Claude Code reads pasted images via wl-paste
     pkgs.apostrophe
     clapper
     pkgs.bitwarden-desktop
