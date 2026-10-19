@@ -7,7 +7,7 @@ let
     { name = "Obsidian"; binding = "<Super>o"; command = "obsidian"; focus = [ "md.obsidian.Obsidian" "obsidian" ]; }
     { name = "Settings"; binding = "<Super>i"; command = "gnome-control-center"; focus = [ "org.gnome.Settings" ]; }
     { name = "Calendar"; binding = "<Super>c"; command = "gnome-calendar"; focus = [ "org.gnome.Calendar" ]; }
-    { name = "Mission Center"; binding = "<Control><Shift>Escape"; command = "missioncenter"; focus = [ "io.missioncenter.MissionCenter" ]; }
+    { name = "Mission Center"; binding = "<Super>r"; command = "missioncenter"; focus = [ "io.missioncenter.MissionCenter" ]; }
     { name = "btop"; binding = "<Super><Shift>t"; command = "ghostty -e btop"; }
     { name = "Keybindings"; binding = "<Super>less"; command = "${toggleCheatsheet}"; }
   ];
@@ -132,6 +132,8 @@ in
   dconf.settings = {
     "org/gnome/settings-daemon/plugins/media-keys" = {
       home = [ "<Super>e" ];
+      # Super+O defaults to the rotation lock; keep only the dedicated key for it.
+      rotate-video-lock-static = [ "XF86RotationLockToggle" ];
       custom-keybindings = lib.imap0 (i: _: customPath i) launchers;
     };
 
