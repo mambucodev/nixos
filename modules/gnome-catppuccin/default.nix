@@ -31,15 +31,15 @@ in
   # only way in without rebuilding gnome-shell is a GLib resource overlay.
   # Scoped to the greeter instance; the user session keeps the user-themes path.
   # Raw unit rather than systemd.user.services, which would inject its own PATH.
+  # Mutter finds cursors only via XCURSOR_PATH, which the greeter doesn't get.
   systemd.user.units."org.gnome.Shell@gdm.service" = {
     overrideStrategy = "asDropin";
     text = ''
       [Service]
       Environment="G_RESOURCE_OVERLAYS=/org/gnome/shell/theme=${greeterStylesheet}"
+      Environment="XCURSOR_PATH=${pkgs.kdePackages.breeze}/share/icons:${pkgs.adwaita-icon-theme}/share/icons"
     '';
   };
-
-  services.displayManager.gdm.extraPackages = [ pkgs.kdePackages.breeze ];
 
   # mkBefore: earlier dconf databases win over gdm's own greeter defaults.
   programs.dconf.profiles.gdm.databases = lib.mkBefore [
