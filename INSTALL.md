@@ -241,8 +241,23 @@ The system uses Lanzaboote for UEFI Secure Boot signing.
    sudo sbctl verify
    ```
 
-### 3. NextDNS Setup
-If using NextDNS, open `modules/networking/default.nix` and replace the placeholder NextDNS endpoint profile ID with your custom profile identifier.
+### 3. NextDNS Setup (Optional)
+DNS goes through `systemd-resolved`. Until a NextDNS profile is set, it uses whatever DNS the network hands out, in plain text. The profile ID stays out of this public repo: the `nextdns-profile` command (from `modules/networking`) writes it to `/etc/systemd/resolved.conf.d/50-nextdns.conf`, which rebuilds never touch, so you set it once per install.
+
+1. Copy your 6-character profile ID from the top of the **Setup** tab at [my.nextdns.io](https://my.nextdns.io) (e.g. `abc123`).
+2. Set it:
+   ```bash
+   sudo nextdns-profile abc123
+   ```
+   This turns on DNS-over-TLS to NextDNS, restarts `systemd-resolved`, and prints the result from `test.nextdns.io`. Check for `"status": "ok"`, `"protocol": "DOT"`, and `"deviceName"` matching the hostname. The host's `networking.hostName` is used as the NextDNS device name, so its queries are labelled e.g. `Freetop` under **Logs** and **Analytics**.
+
+| Command | Effect |
+| --- | --- |
+| `nextdns-profile` | Show the active profile and the live `test.nextdns.io` check |
+| `sudo nextdns-profile <id>` | Set or switch the profile |
+| `sudo nextdns-profile --off` | Remove the profile and fall back to the network's DNS |
+
+> 💡 Captive portals (hotels, trains) can't intercept DNS-over-TLS. Run `sudo nextdns-profile --off` to log in, then set the profile again.
 
 ### 4. SSH Key Placement
 Copy your private ED25519 SSH key to `~/.ssh/id_ed25519` and set secure file permissions:
