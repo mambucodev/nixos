@@ -101,6 +101,7 @@ in
         "activate-window-by-title@lucaswerkmeister.de"
         "dash-to-dock@micxgx.gmail.com"
         "clipboard-indicator@tudmotu.com"
+        "caffeine@patapon.info"
       ];
       favorite-apps = [
         "com.mitchellh.ghostty.desktop"
