@@ -45,6 +45,8 @@ in
     pkgs.cartero
     pkgs.newsflash
     pkgs.fragments
+    pkgs.alpaca
+    pkgs.mission-center
     (pkgs.obsidian.overrideAttrs (old: {
       postFixup = (old.postFixup or "") + ''
         echo "StartupWMClass=md.obsidian.Obsidian" >> $out/share/applications/obsidian.desktop
