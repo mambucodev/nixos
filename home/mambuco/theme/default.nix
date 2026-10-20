@@ -68,6 +68,7 @@ in
     inputs.catppuccin.homeModules.catppuccin
     ./gnome-catppuccin.nix
     ./cursor.nix
+    ./text-editor.nix
   ];
 
   catppuccin = {
