@@ -1,8 +1,5 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 
-let
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
@@ -10,7 +7,16 @@ in
 
   programs.spicetify = {
     enable = true;
-    theme = spicePkgs.themes.catppuccin;
+    theme = {
+      name = "catppuccin-clean";
+      src = ./catppuccin-clean;
+      injectCss = true;
+      injectThemeJs = false;
+      # user.css redefines the --spice-* vars that replaceColors generates
+      replaceColors = true;
+      overwriteAssets = false;
+      homeConfig = true;
+    };
     colorScheme = "macchiato";
     enabledExtensions = [ ];
   };

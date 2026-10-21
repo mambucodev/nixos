@@ -1,0 +1,548 @@
+/* ==========================================================================
+   Catppuccin Macchiato — "clean" for Spotify 1.2.9x (Encore)
+   Layer 1: palette + accent
+   Layer 2: spicetify variables (--spice-*) and Encore tokens for each "set"
+   Layer 3: a few targeted overrides on stable selectors
+   No hashed classes: survives Spotify updates.
+   ========================================================================== */
+
+/* ---------- 1. Palette ---------------------------------------------------- */
+:root:root {
+  --ctp-rosewater: #f4dbd6;
+  --ctp-rosewater-rgb: 244,219,214;
+  --ctp-flamingo: #f0c6c6;
+  --ctp-flamingo-rgb: 240,198,198;
+  --ctp-pink: #f5bde6;
+  --ctp-pink-rgb: 245,189,230;
+  --ctp-mauve: #c6a0f6;
+  --ctp-mauve-rgb: 198,160,246;
+  --ctp-red: #ed8796;
+  --ctp-red-rgb: 237,135,150;
+  --ctp-maroon: #ee99a0;
+  --ctp-maroon-rgb: 238,153,160;
+  --ctp-peach: #f5a97f;
+  --ctp-peach-rgb: 245,169,127;
+  --ctp-yellow: #eed49f;
+  --ctp-yellow-rgb: 238,212,159;
+  --ctp-green: #a6da95;
+  --ctp-green-rgb: 166,218,149;
+  --ctp-teal: #8bd5ca;
+  --ctp-teal-rgb: 139,213,202;
+  --ctp-sky: #91d7e3;
+  --ctp-sky-rgb: 145,215,227;
+  --ctp-sapphire: #7dc4e4;
+  --ctp-sapphire-rgb: 125,196,228;
+  --ctp-blue: #8aadf4;
+  --ctp-blue-rgb: 138,173,244;
+  --ctp-lavender: #b7bdf8;
+  --ctp-lavender-rgb: 183,189,248;
+  --ctp-text: #cad3f5;
+  --ctp-text-rgb: 202,211,245;
+  --ctp-subtext1: #b8c0e0;
+  --ctp-subtext1-rgb: 184,192,224;
+  --ctp-subtext0: #a5adcb;
+  --ctp-subtext0-rgb: 165,173,203;
+  --ctp-overlay2: #939ab7;
+  --ctp-overlay2-rgb: 147,154,183;
+  --ctp-overlay1: #8087a2;
+  --ctp-overlay1-rgb: 128,135,162;
+  --ctp-overlay0: #6e738d;
+  --ctp-overlay0-rgb: 110,115,141;
+  --ctp-surface2: #5b6078;
+  --ctp-surface2-rgb: 91,96,120;
+  --ctp-surface1: #494d64;
+  --ctp-surface1-rgb: 73,77,100;
+  --ctp-surface0: #363a4f;
+  --ctp-surface0-rgb: 54,58,79;
+  --ctp-base: #24273a;
+  --ctp-base-rgb: 36,39,58;
+  --ctp-mantle: #1e2030;
+  --ctp-mantle-rgb: 30,32,48;
+  --ctp-crust: #181926;
+  --ctp-crust-rgb: 24,25,38;
+
+  /* ACCENT: change only these two lines (e.g. lavender, blue, pink, teal…) */
+  --ctp-accent: var(--ctp-mauve);
+  --ctp-accent-rgb: var(--ctp-mauve-rgb);
+}
+
+/* ---------- 2a. Spicetify variables ---------------------------------------
+   replaceColors swapped Spotify's hard-coded colours for these variables;
+   we redefine them from the palette so color.ini doesn't have to stay in sync. */
+:root:root {
+  --spice-text: var(--ctp-text);
+  --spice-rgb-text: var(--ctp-text-rgb);
+  --spice-subtext: var(--ctp-subtext0);
+  --spice-rgb-subtext: var(--ctp-subtext0-rgb);
+  --spice-main: var(--ctp-base);
+  --spice-rgb-main: var(--ctp-base-rgb);
+  --spice-main-elevated: var(--ctp-surface0);
+  --spice-rgb-main-elevated: var(--ctp-surface0-rgb);
+  --spice-highlight: var(--ctp-surface0);
+  --spice-rgb-highlight: var(--ctp-surface0-rgb);
+  --spice-highlight-elevated: var(--ctp-surface1);
+  --spice-rgb-highlight-elevated: var(--ctp-surface1-rgb);
+  --spice-sidebar: var(--ctp-crust);
+  --spice-rgb-sidebar: var(--ctp-crust-rgb);
+  --spice-player: var(--ctp-mantle);
+  --spice-rgb-player: var(--ctp-mantle-rgb);
+  --spice-card: var(--ctp-surface0);
+  --spice-rgb-card: var(--ctp-surface0-rgb);
+  --spice-shadow: var(--ctp-crust);
+  --spice-rgb-shadow: var(--ctp-crust-rgb);
+  --spice-selected-row: var(--ctp-text);
+  --spice-rgb-selected-row: var(--ctp-text-rgb);
+  --spice-button: var(--ctp-accent);
+  --spice-rgb-button: var(--ctp-accent-rgb);
+  --spice-button-active: var(--ctp-accent);
+  --spice-rgb-button-active: var(--ctp-accent-rgb);
+  --spice-button-disabled: var(--ctp-surface2);
+  --spice-rgb-button-disabled: var(--ctp-surface2-rgb);
+  --spice-tab-active: var(--ctp-surface1);
+  --spice-rgb-tab-active: var(--ctp-surface1-rgb);
+  --spice-notification: var(--ctp-blue);
+  --spice-rgb-notification: var(--ctp-blue-rgb);
+  --spice-notification-error: var(--ctp-red);
+  --spice-rgb-notification-error: var(--ctp-red-rgb);
+  --spice-misc: var(--ctp-overlay1);
+  --spice-rgb-misc: var(--ctp-overlay1-rgb);
+}
+
+/* ---------- 2b. Encore tokens ---------------------------------------------
+   Spotify defines these tokens per "set" (base, app-frame, inverted…).
+   replaceColors only covers some of them: the rest (#ffffff1a, #7c7c7c,
+   #191919, #292929, greens, blues, reds…) is what showed up grey or "off-theme". */
+.encore-dark-theme.encore-dark-theme,
+.encore-dark-theme.encore-dark-theme .encore-base-set {
+  --background-base: var(--ctp-base);
+  --background-highlight: var(--ctp-surface0);
+  --background-press: var(--ctp-mantle);
+  --background-elevated-base: var(--ctp-surface0);
+  --background-elevated-highlight: var(--ctp-surface1);
+  --background-elevated-press: var(--ctp-mantle);
+  --background-tinted-base: rgba(var(--ctp-text-rgb), 0.08);
+  --background-tinted-highlight: rgba(var(--ctp-text-rgb), 0.13);
+  --background-tinted-press: rgba(var(--ctp-text-rgb), 0.2);
+  --text-base: var(--ctp-text);
+  --text-subdued: var(--ctp-subtext0);
+  --text-bright-accent: var(--ctp-accent);
+  --text-negative: var(--ctp-red);
+  --text-warning: var(--ctp-peach);
+  --text-positive: var(--ctp-green);
+  --text-announcement: var(--ctp-blue);
+  --essential-base: var(--ctp-text);
+  --essential-subdued: var(--ctp-overlay1);
+  --essential-bright-accent: var(--ctp-accent);
+  --essential-negative: var(--ctp-red);
+  --essential-warning: var(--ctp-peach);
+  --essential-positive: var(--ctp-green);
+  --essential-announcement: var(--ctp-blue);
+  --decorative-base: var(--ctp-text);
+  --decorative-subdued: var(--ctp-surface1);
+}
+
+.encore-dark-theme.encore-dark-theme .encore-app-frame-set,
+.encore-dark-theme.encore-dark-theme .encore-muted-accent-set {
+  --background-base: var(--ctp-crust);
+  --background-highlight: var(--ctp-mantle);
+  --background-press: var(--ctp-surface0);
+  --background-elevated-base: var(--ctp-mantle);
+  --background-elevated-highlight: var(--ctp-surface0);
+  --background-elevated-press: var(--ctp-crust);
+  --background-tinted-base: rgba(var(--ctp-text-rgb), 0.09);
+  --background-tinted-highlight: rgba(var(--ctp-text-rgb), 0.14);
+  --background-tinted-press: rgba(var(--ctp-text-rgb), 0.22);
+  --text-base: var(--ctp-text);
+  --text-subdued: var(--ctp-subtext0);
+  --text-bright-accent: var(--ctp-accent);
+  --text-negative: var(--ctp-red);
+  --text-warning: var(--ctp-peach);
+  --text-positive: var(--ctp-green);
+  --text-announcement: var(--ctp-blue);
+  --essential-base: var(--ctp-text);
+  --essential-subdued: var(--ctp-overlay0);
+  --essential-bright-accent: var(--ctp-accent);
+  --essential-negative: var(--ctp-red);
+  --essential-warning: var(--ctp-peach);
+  --essential-positive: var(--ctp-green);
+  --essential-announcement: var(--ctp-blue);
+  --decorative-base: var(--ctp-text);
+  --decorative-subdued: var(--ctp-surface0);
+}
+
+.encore-dark-theme.encore-dark-theme .encore-inverted-dark-set {
+  --background-base: var(--ctp-crust);
+  --background-highlight: var(--ctp-mantle);
+  --background-press: var(--ctp-surface0);
+  --background-elevated-base: var(--ctp-mantle);
+  --background-elevated-highlight: var(--ctp-surface0);
+  --background-elevated-press: var(--ctp-crust);
+  --background-tinted-base: rgba(var(--ctp-text-rgb), 0.09);
+  --background-tinted-highlight: rgba(var(--ctp-text-rgb), 0.14);
+  --background-tinted-press: rgba(var(--ctp-text-rgb), 0.22);
+  --text-base: var(--ctp-text);
+  --text-subdued: var(--ctp-subtext0);
+  --text-bright-accent: var(--ctp-accent);
+  --text-negative: var(--ctp-red);
+  --text-warning: var(--ctp-peach);
+  --text-positive: var(--ctp-green);
+  --text-announcement: var(--ctp-blue);
+  --essential-base: var(--ctp-text);
+  --essential-subdued: var(--ctp-overlay0);
+  --essential-bright-accent: var(--ctp-accent);
+  --essential-negative: var(--ctp-red);
+  --essential-warning: var(--ctp-peach);
+  --essential-positive: var(--ctp-green);
+  --essential-announcement: var(--ctp-blue);
+  --decorative-base: var(--ctp-text);
+  --decorative-subdued: var(--ctp-surface0);
+}
+
+.encore-dark-theme.encore-dark-theme .encore-inverted-set,
+.encore-dark-theme.encore-dark-theme .encore-inverted-light-set {
+  --background-base: var(--ctp-accent);
+  --background-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-accent);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-mantle);
+  --essential-subdued: var(--ctp-mantle);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-over-media-set {
+  --background-base: rgba(var(--ctp-crust-rgb), 0.55);
+  --background-highlight: rgba(var(--ctp-crust-rgb), 0.62);
+  --background-press: rgba(var(--ctp-crust-rgb), 0.72);
+  --background-elevated-base: rgba(var(--ctp-crust-rgb), 0.62);
+  --background-elevated-highlight: rgba(var(--ctp-crust-rgb), 0.62);
+  --background-elevated-press: rgba(var(--ctp-crust-rgb), 0.72);
+  --background-tinted-base: rgba(var(--ctp-crust-rgb), 0.55);
+  --background-tinted-highlight: rgba(var(--ctp-crust-rgb), 0.55);
+  --background-tinted-press: rgba(var(--ctp-crust-rgb), 0.55);
+  --text-base: var(--ctp-text);
+  --text-bright-accent: var(--ctp-text);
+  --text-negative: var(--ctp-text);
+  --text-warning: var(--ctp-text);
+  --text-positive: var(--ctp-text);
+  --text-announcement: var(--ctp-text);
+  --essential-base: var(--ctp-text);
+  --essential-bright-accent: var(--ctp-text);
+  --essential-negative: var(--ctp-text);
+  --essential-warning: var(--ctp-text);
+  --essential-positive: var(--ctp-text);
+  --essential-announcement: var(--ctp-text);
+  --decorative-base: var(--ctp-text);
+  --text-subdued: var(--ctp-text);
+  --essential-subdued: var(--ctp-text);
+  --decorative-subdued: rgba(var(--ctp-text-rgb), 0.13);
+}
+
+.encore-dark-theme.encore-dark-theme .encore-bright-accent-set {
+  --background-base: var(--ctp-accent);
+  --background-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-accent);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-crust);
+  --essential-subdued: var(--ctp-crust);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-positive-set {
+  --background-base: var(--ctp-green);
+  --background-highlight: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-green);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-crust);
+  --essential-subdued: var(--ctp-crust);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-green) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-negative-set {
+  --background-base: var(--ctp-red);
+  --background-highlight: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-red);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-crust);
+  --essential-subdued: var(--ctp-crust);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-warning-set {
+  --background-base: var(--ctp-peach);
+  --background-highlight: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-peach);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-crust);
+  --essential-subdued: var(--ctp-crust);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-peach) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-announcement-set {
+  --background-base: var(--ctp-blue);
+  --background-highlight: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-text));
+  --background-press: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-crust));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-text));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-text));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-crust));
+  --background-tinted-base: var(--ctp-blue);
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-text));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-crust));
+  --text-base: var(--ctp-crust);
+  --text-bright-accent: var(--ctp-crust);
+  --text-negative: var(--ctp-crust);
+  --text-warning: var(--ctp-crust);
+  --text-positive: var(--ctp-crust);
+  --text-announcement: var(--ctp-crust);
+  --essential-base: var(--ctp-crust);
+  --essential-bright-accent: var(--ctp-crust);
+  --essential-negative: var(--ctp-crust);
+  --essential-warning: var(--ctp-crust);
+  --essential-positive: var(--ctp-crust);
+  --essential-announcement: var(--ctp-crust);
+  --decorative-base: var(--ctp-crust);
+  --text-subdued: var(--ctp-crust);
+  --essential-subdued: var(--ctp-crust);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-blue) 85%, var(--ctp-crust));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-positive-subdued-set {
+  --background-base: color-mix(in srgb, var(--ctp-green) 22%, var(--ctp-base));
+  --background-highlight: color-mix(in srgb, var(--ctp-green) 30%, var(--ctp-base));
+  --background-press: color-mix(in srgb, var(--ctp-green) 38%, var(--ctp-base));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-green) 30%, var(--ctp-base));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-green) 30%, var(--ctp-base));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-green) 38%, var(--ctp-base));
+  --background-tinted-base: color-mix(in srgb, var(--ctp-green) 22%, var(--ctp-base));
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-green) 22%, var(--ctp-base));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-green) 22%, var(--ctp-base));
+  --text-base: var(--ctp-green);
+  --text-bright-accent: var(--ctp-green);
+  --text-negative: var(--ctp-green);
+  --text-warning: var(--ctp-green);
+  --text-positive: var(--ctp-green);
+  --text-announcement: var(--ctp-green);
+  --essential-base: var(--ctp-green);
+  --essential-bright-accent: var(--ctp-green);
+  --essential-negative: var(--ctp-green);
+  --essential-warning: var(--ctp-green);
+  --essential-positive: var(--ctp-green);
+  --essential-announcement: var(--ctp-green);
+  --decorative-base: var(--ctp-green);
+  --text-subdued: var(--ctp-green);
+  --essential-subdued: var(--ctp-green);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-green) 30%, var(--ctp-base));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-negative-subdued-set {
+  --background-base: color-mix(in srgb, var(--ctp-red) 22%, var(--ctp-base));
+  --background-highlight: color-mix(in srgb, var(--ctp-red) 30%, var(--ctp-base));
+  --background-press: color-mix(in srgb, var(--ctp-red) 38%, var(--ctp-base));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-red) 30%, var(--ctp-base));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-red) 30%, var(--ctp-base));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-red) 38%, var(--ctp-base));
+  --background-tinted-base: color-mix(in srgb, var(--ctp-red) 22%, var(--ctp-base));
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-red) 22%, var(--ctp-base));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-red) 22%, var(--ctp-base));
+  --text-base: var(--ctp-red);
+  --text-bright-accent: var(--ctp-red);
+  --text-negative: var(--ctp-red);
+  --text-warning: var(--ctp-red);
+  --text-positive: var(--ctp-red);
+  --text-announcement: var(--ctp-red);
+  --essential-base: var(--ctp-red);
+  --essential-bright-accent: var(--ctp-red);
+  --essential-negative: var(--ctp-red);
+  --essential-warning: var(--ctp-red);
+  --essential-positive: var(--ctp-red);
+  --essential-announcement: var(--ctp-red);
+  --decorative-base: var(--ctp-red);
+  --text-subdued: var(--ctp-red);
+  --essential-subdued: var(--ctp-red);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-red) 30%, var(--ctp-base));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-warning-subdued-set {
+  --background-base: color-mix(in srgb, var(--ctp-peach) 22%, var(--ctp-base));
+  --background-highlight: color-mix(in srgb, var(--ctp-peach) 30%, var(--ctp-base));
+  --background-press: color-mix(in srgb, var(--ctp-peach) 38%, var(--ctp-base));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-peach) 30%, var(--ctp-base));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-peach) 30%, var(--ctp-base));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-peach) 38%, var(--ctp-base));
+  --background-tinted-base: color-mix(in srgb, var(--ctp-peach) 22%, var(--ctp-base));
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-peach) 22%, var(--ctp-base));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-peach) 22%, var(--ctp-base));
+  --text-base: var(--ctp-peach);
+  --text-bright-accent: var(--ctp-peach);
+  --text-negative: var(--ctp-peach);
+  --text-warning: var(--ctp-peach);
+  --text-positive: var(--ctp-peach);
+  --text-announcement: var(--ctp-peach);
+  --essential-base: var(--ctp-peach);
+  --essential-bright-accent: var(--ctp-peach);
+  --essential-negative: var(--ctp-peach);
+  --essential-warning: var(--ctp-peach);
+  --essential-positive: var(--ctp-peach);
+  --essential-announcement: var(--ctp-peach);
+  --decorative-base: var(--ctp-peach);
+  --text-subdued: var(--ctp-peach);
+  --essential-subdued: var(--ctp-peach);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-peach) 30%, var(--ctp-base));
+}
+
+.encore-dark-theme.encore-dark-theme .encore-announcement-subdued-set {
+  --background-base: color-mix(in srgb, var(--ctp-blue) 22%, var(--ctp-base));
+  --background-highlight: color-mix(in srgb, var(--ctp-blue) 30%, var(--ctp-base));
+  --background-press: color-mix(in srgb, var(--ctp-blue) 38%, var(--ctp-base));
+  --background-elevated-base: color-mix(in srgb, var(--ctp-blue) 30%, var(--ctp-base));
+  --background-elevated-highlight: color-mix(in srgb, var(--ctp-blue) 30%, var(--ctp-base));
+  --background-elevated-press: color-mix(in srgb, var(--ctp-blue) 38%, var(--ctp-base));
+  --background-tinted-base: color-mix(in srgb, var(--ctp-blue) 22%, var(--ctp-base));
+  --background-tinted-highlight: color-mix(in srgb, var(--ctp-blue) 22%, var(--ctp-base));
+  --background-tinted-press: color-mix(in srgb, var(--ctp-blue) 22%, var(--ctp-base));
+  --text-base: var(--ctp-blue);
+  --text-bright-accent: var(--ctp-blue);
+  --text-negative: var(--ctp-blue);
+  --text-warning: var(--ctp-blue);
+  --text-positive: var(--ctp-blue);
+  --text-announcement: var(--ctp-blue);
+  --essential-base: var(--ctp-blue);
+  --essential-bright-accent: var(--ctp-blue);
+  --essential-negative: var(--ctp-blue);
+  --essential-warning: var(--ctp-blue);
+  --essential-positive: var(--ctp-blue);
+  --essential-announcement: var(--ctp-blue);
+  --decorative-base: var(--ctp-blue);
+  --text-subdued: var(--ctp-blue);
+  --essential-subdued: var(--ctp-blue);
+  --decorative-subdued: color-mix(in srgb, var(--ctp-blue) 30%, var(--ctp-base));
+}
+
+
+/* ---------- 3. Targeted overrides ----------------------------------------- */
+
+/* Progress and volume bars: the variables are set on the container */
+:root div:has(> .x-progressBar-progressBarBg),
+:root [data-testid="progress-bar"] {
+  --bg-color: var(--ctp-surface1) !important;
+  --mg-color: var(--ctp-overlay2) !important;
+  --fg-color: var(--ctp-accent) !important;
+  --is-active-fg-color: var(--ctp-accent) !important;
+}
+
+/* Scrollbar (OverlayScrollbars + native) */
+:root .os-theme-spotify.os-scrollbar {
+  --os-handle-bg: rgba(var(--ctp-overlay2-rgb), 0.35);
+  --os-handle-bg-hover: rgba(var(--ctp-overlay2-rgb), 0.55);
+  --os-handle-bg-active: rgba(var(--ctp-accent-rgb), 0.75);
+}
+html { scrollbar-color: rgba(var(--ctp-overlay2-rgb), 0.35) transparent; }
+
+/* Text selection */
+::selection {
+  background-color: rgba(var(--ctp-accent-rgb), 0.35);
+  color: var(--ctp-text);
+}
+
+/* Context menus and tooltips */
+:root .main-contextMenu-menu {
+  background-color: var(--ctp-mantle);
+  border: 1px solid var(--ctp-surface0);
+  box-shadow: 0 16px 24px rgba(var(--ctp-crust-rgb), 0.5);
+}
+:root .main-contextMenu-tippy {
+  --generic-tooltip-background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+}
+
+/* Consistent keyboard focus */
+:root :focus-visible { outline-color: var(--ctp-accent); }
