@@ -37,6 +37,7 @@
     ../../modules/kdeconnect
     ../../modules/packet
     ../../modules/containers
+    ../../modules/beamer
   ];
 
   boot.initrd.luks.devices = {
