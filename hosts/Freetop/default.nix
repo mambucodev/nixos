@@ -38,6 +38,7 @@
     ../../modules/packet
     ../../modules/containers
     ../../modules/beamer
+    ../../modules/flatpak
   ];
 
   boot.initrd.luks.devices = {
