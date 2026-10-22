@@ -11,6 +11,7 @@
     serviceConfig.Type = "oneshot";
     script = ''
       flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      flatpak install -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark
     '';
   };
 }

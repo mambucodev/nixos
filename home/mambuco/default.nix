@@ -14,6 +14,7 @@
     ./zed
     ./chromium
     ./theme
+    ./flatpak
     ./vesktop
     ./discord-rpc
     ./dev
