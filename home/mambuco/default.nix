@@ -22,6 +22,7 @@
     ./spotify
     ./stamp
     ./claude
+    ./libreoffice
   ];
 
   home.username = "mambuco";
