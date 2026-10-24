@@ -32,13 +32,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "beamer";
-  version = "1.5.6";
+  version = "1.5.11";
 
   src = fetchFromGitHub {
     owner = "kalkman-code";
     repo = "beamer";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-L489cJE6lf6eb849ZJAKccm0eRRriq8M2d6mkP3h+3U=";
+    hash = "sha256-2yZ81oQHb4q26qd9XGtyuhgGI5b31PcTsTpR4k2NR9I=";
   };
 
   nativeBuildInputs = [
