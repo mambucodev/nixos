@@ -75,6 +75,7 @@ in
   home.packages = [
     pkgs.sshfs
     pkgs.sox
+    pkgs.ntfy-sh
     pkgs.wl-clipboard  # Claude Code reads pasted images via wl-paste
     pkgs.apostrophe
     clapper
