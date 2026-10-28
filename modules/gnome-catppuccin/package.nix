@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub, python3, gnome-shell }:
 
 stdenv.mkDerivation {
-  pname = "gnome-catppuccin-macchiato";
+  pname = "gnome-catppuccin-mocha";
   version = "v1.0";
 
   src = fetchFromGitHub {
@@ -18,15 +18,10 @@ stdenv.mkDerivation {
 
   # The pinned gnome-shell submodule predates GNOME 50 (no styles for e.g. the
   # login screen's a11y button), so build against the shell actually in use.
-  # Upstream ships only Mocha. Remap Mocha→Macchiato, but in palette.scss only
-  # the mappings (refs ending in `;`), not the later Mocha definitions.
   postPatch = ''
     rm -rf gnome-shell
     mkdir gnome-shell
     tar -xf ${gnome-shell.src} --strip-components=1 -C gnome-shell
-
-    sed -i 's/\$mocha\(-[a-z0-9]\+\);/$macchiato\1;/g' palette.scss
-    sed -i 's/\$mocha-/$macchiato-/g' default-colors.scss.patch colors.scss.patch
   '';
 
   buildPhase = ''

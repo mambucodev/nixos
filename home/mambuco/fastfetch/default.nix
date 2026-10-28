@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  # catppuccin/nix has no fastfetch port — Macchiato colors as 24-bit SGR
+  # catppuccin/nix has no fastfetch port — Mocha colors as 24-bit SGR
   c = r: g: b: "38;2;${toString r};${toString g};${toString b}";
   p = {
     blue = c 138 173 244;

@@ -9,13 +9,13 @@ let
   };
 
   # Upstream omits the version attribute, which GtkSourceView 5 requires.
-  macchiato = pkgs.runCommand "catppuccin-macchiato-gtksourceview.xml" { } ''
-    sed 's|<style-scheme id="catppuccin-macchiato"|<style-scheme version="1.0" id="catppuccin-macchiato"|' \
-      ${catppuccin-gtksourceview}/themes/catppuccin-macchiato.xml > $out
+  mocha = pkgs.runCommand "catppuccin-mocha-gtksourceview.xml" { } ''
+    sed 's|<style-scheme id="catppuccin-mocha"|<style-scheme version="1.0" id="catppuccin-mocha"|' \
+      ${catppuccin-gtksourceview}/themes/catppuccin-mocha.xml > $out
   '';
 in
 {
-  xdg.dataFile."gtksourceview-5/styles/catppuccin-macchiato.xml".source = macchiato;
+  xdg.dataFile."gtksourceview-5/styles/catppuccin-mocha.xml".source = mocha;
 
-  dconf.settings."org/gnome/TextEditor".style-scheme = "catppuccin-macchiato";
+  dconf.settings."org/gnome/TextEditor".style-scheme = "catppuccin-mocha";
 }

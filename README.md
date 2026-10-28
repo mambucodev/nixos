@@ -11,7 +11,7 @@ An opinionated, modular NixOS flake configuration managing **Freetop** (HP lapto
 | **OS / Branch** | NixOS `26.05` (Unstable / Rolling release track) |
 | **Target Host** | `Freetop` (HP Laptop, Intel CPU, Elan Fingerprint Reader) |
 | **Primary User** | `mambuco` |
-| **Desktop Environment** | GNOME on Wayland with Catppuccin Macchiato styling |
+| **Desktop Environment** | GNOME on Wayland with Catppuccin Mocha styling |
 | **Shell & Terminal** | Fish Shell + Starship Prompt |
 | **Storage & Security** | LUKS2 Full Disk Encryption → Btrfs subvolumes |
 | **Boot Mechanism** | UEFI `systemd-boot` + Lanzaboote (Secure Boot) |
@@ -97,7 +97,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
 
 ### User Environment & Customizations
 - **Integrated Home Manager:** Configured via `home-manager.nixosModules.home-manager` in `flake.nix`. Home configurations apply automatically during system rebuilds.
-- **Theming System:** Catppuccin Macchiato color theme applied across GNOME, GTK apps (`adw-gtk3`), terminals, and web browsers via `catppuccin/nix`.
+- **Theming System:** Catppuccin Mocha color theme applied across GNOME, GTK apps (`adw-gtk3`), terminals, and web browsers via `catppuccin/nix`.
 - **Shell Experience:** Interactive `fish` shell pre-configured with `starship` prompt, `zoxide` directory jump, `eza` file listings, `bat` syntax highlighting, `fzf`, `rg`, and `lazygit`.
 
 ---

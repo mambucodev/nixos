@@ -43,16 +43,16 @@
         error_symbol = "[›](bold red)";
       };
       # catppuccin/nix only themes the home-manager starship module, not this system-level one
-      palette = "catppuccin_macchiato";
-      palettes.catppuccin_macchiato = {
-        lavender = "#b7bdf8";
-        peach = "#f5a97f";
-        yellow = "#eed49f";
-        green = "#a6da95";
-        teal = "#8bd5ca";
-        red = "#ed8796";
-        overlay1 = "#8087a2";
-        surface2 = "#5b6078";
+      palette = "catppuccin_mocha";
+      palettes.catppuccin_mocha = {
+        lavender = "#b4befe";
+        peach = "#fab387";
+        yellow = "#f9e2af";
+        green = "#a6e3a1";
+        teal = "#94e2d5";
+        red = "#f38ba8";
+        overlay1 = "#7f849c";
+        surface2 = "#585b70";
       };
     };
   };

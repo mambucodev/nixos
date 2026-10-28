@@ -27,7 +27,7 @@ in
   home.file = {
     "${profileDir}/chrome/userChrome.css".source = ./catppuccin/userChrome.css;
     "${profileDir}/chrome/userContent.css".source = ./catppuccin/userContent.css;
-    "${profileDir}/chrome/zen-logo-macchiato.svg".source = ./catppuccin/zen-logo-macchiato.svg;
+    "${profileDir}/chrome/zen-logo-mocha.svg".source = ./catppuccin/zen-logo-mocha.svg;
     "${profileDir}/user.js".text = ''
       user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
@@ -39,8 +39,8 @@ in
       user_pref("zen.theme.color-prefs.colorful-tabs-background", false);
       user_pref("zen.theme.acrylic-elements", false);
 
-      // Pin the accent to the catppuccin macchiato blue so the picker stops fighting.
-      user_pref("zen.theme.accent-color", "#8aadf4");
+      // Pin the accent to the catppuccin mocha blue so the picker stops fighting.
+      user_pref("zen.theme.accent-color", "#89b4fa");
     '';
   };
 }

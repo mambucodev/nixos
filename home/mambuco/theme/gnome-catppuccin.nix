@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    gnome-catppuccin-macchiato
+    gnome-catppuccin-mocha
     gnomeExtensions.user-themes
   ];
 }

@@ -17,7 +17,7 @@
       overwriteAssets = false;
       homeConfig = true;
     };
-    colorScheme = "macchiato";
+    colorScheme = "mocha";
     enabledExtensions = [ ];
   };
 }

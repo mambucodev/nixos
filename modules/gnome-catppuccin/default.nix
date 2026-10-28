@@ -7,11 +7,11 @@ let
   # gets the catppuccin stylesheet plus the desktop wallpaper behind the dialog.
   greeterStylesheet = pkgs.runCommand "gdm-catppuccin-stylesheet" { } ''
     mkdir -p $out
-    cat ${pkgs.gnome-catppuccin-macchiato}/share/themes/gnome-catppuccin/gnome-shell/gnome-shell.css - \
+    cat ${pkgs.gnome-catppuccin-mocha}/share/themes/gnome-catppuccin/gnome-shell/gnome-shell.css - \
       > $out/gnome-shell-dark.css <<'EOF'
 
     #lockDialogGroup {
-      background-color: #24273a;
+      background-color: #1e1e2e;
       background-image: url("file://${wallpaper}");
       background-size: cover;
       background-position: center;
@@ -23,7 +23,7 @@ in
 {
   nixpkgs.overlays = [
     (final: prev: {
-      gnome-catppuccin-macchiato = final.callPackage ./package.nix { };
+      gnome-catppuccin-mocha = final.callPackage ./package.nix { };
     })
   ];
 

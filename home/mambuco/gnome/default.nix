@@ -126,7 +126,7 @@ in
       running-indicator-style = "DOTS";
       transparency-mode = "FIXED";
       custom-background-color = true;
-      background-color = "#24273a"; # Macchiato base — lifts off the darker (crust) wallpaper
+      background-color = "#1e1e2e"; # Mocha base — lifts off the darker (crust) wallpaper
       background-opacity = 0.6; # translucent so blur-my-shell's blur shows through the tint
       show-trash = false;
       show-mounts = false;
@@ -149,7 +149,7 @@ in
     "org/gnome/shell/extensions/blur-my-shell/panel".blur = false;
 
     # Blur only underneath: override-background would swap dash-to-dock's
-    # Macchiato base for blur-my-shell's grey presets. The rounded pipeline's
+    # Mocha base for blur-my-shell's grey presets. The rounded pipeline's
     # 24px corners match dash-to-dock's bottom pill. Static is enough since
     # intellihide keeps the dock off windows.
     "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {

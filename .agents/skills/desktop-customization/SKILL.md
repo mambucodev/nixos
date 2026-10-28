@@ -16,7 +16,7 @@ Use this skill when modifying desktop styling, docks, panels, keybindings, appli
 All desktop customizations reside under `home/mambuco/`:
 - **`gnome/default.nix`**: `dconf.settings` (Dash to Dock, Top Bar Organizer, keybindings, extension configs).
 - **`gnome/apps.nix`**: MIME associations (`xdg.mimeApps`), autostart entries, and hidden desktop items.
-- **`theme/default.nix`**: Catppuccin Macchiato palette, GTK 3/4 CSS overrides (`@define-color`), icons, and adw-gtk3 theme.
+- **`theme/default.nix`**: Catppuccin Mocha palette, GTK 3/4 CSS overrides (`@define-color`), icons, and adw-gtk3 theme.
 - **`theme/gnome-catppuccin.nix`**: Custom Catppuccin GNOME Shell user theme.
 
 ---

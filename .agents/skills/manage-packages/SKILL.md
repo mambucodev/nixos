@@ -17,7 +17,7 @@ When the user requests an app or a replacement:
 1. **Research options**: Check Nixpkgs, community flakes (e.g., `spicetify-nix`, `zen-browser-flake`), and specialized wrappers.
 2. **Present concise options**: Provide a short, structured comparison to help the user pick fast:
    - Official package vs. community wrapper / flake vs. lightweight / TUI alternative.
-   - Theme compatibility (e.g. Catppuccin Macchiato alignment).
+   - Theme compatibility (e.g. Catppuccin Mocha alignment).
    - Any trade-offs (e.g. unfree license, Electron overhead, feature limits).
 3. Wait for the user's choice before making changes.
 
