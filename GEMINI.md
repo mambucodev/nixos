@@ -33,7 +33,6 @@ home/mambuco/<name>/         one folder per user-level concern
   packages/                  GUI & CLI apps via home.packages (bitwarden, antigravity, spotify, …)
   cli/                       programs.<x>.enable for btop/eza/bat/rg/fd/fzf/zoxide/lazygit/gh
   git/                       programs.git with delta + aliases + ignores
-  zen-browser/               zen module + policies (+ catppuccin/ CSS assets)
   gnome/                     default.nix = dconf.settings; apps.nix = mimeapps/autostart/hidden
   neovim/                    programs.neovim with LSP, treesitter, telescope, cmp
   theme/                     default.nix + gnome-catppuccin.nix + cursor.nix

@@ -7,7 +7,6 @@
     ./fastfetch
     ./git
     ./ssh
-    ./zen-browser
     ./helium
     ./gnome
     ./neovim
@@ -20,7 +19,6 @@
     ./dev
     ./budslink
     ./spotify
-    ./stamp
     ./claude
     ./libreoffice
   ];

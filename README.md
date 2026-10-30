@@ -80,8 +80,7 @@ The repository follows a strictly decoupled, concern-based module pattern. Every
         ├── ssh/               # User SSH configuration
         ├── theme/             # GTK adw-gtk3, Catppuccin palette, Bibata cursors
         ├── vesktop/           # Custom Discord client wrapper
-        ├── zed/               # Zed editor settings & extensions
-        └── zen-browser/       # Zen Browser module with Catppuccin styling
+        └── zed/               # Zed editor settings & extensions
 ```
 
 ---
