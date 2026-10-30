@@ -82,6 +82,7 @@ in
     antigravity.google-antigravity
     antigravity.google-antigravity-ide
     antigravity.google-antigravity-cli
+    inputs.delta.packages.${pkgs.stdenv.hostPlatform.system}.delta
     pkgs.gnomeExtensions.hibernate-status-button
     appindicator
     pkgs.gjs # appindicator spawns `gjs` to rediscover tray icons already on the bus
