@@ -103,6 +103,9 @@ in
     pkgs.cartero
     pkgs.newsflash
     pkgs.fragments
+    pkgs.file-roller
+    pkgs._7zz # File Roller backends beyond libarchive: 7z/rar via 7zz, the rest via unar
+    pkgs.unar
     pkgs.alpaca
     pkgs.mission-center
     (pkgs.obsidian.overrideAttrs (old: {

@@ -47,6 +47,7 @@ let
   apostrophe = "org.gnome.gitlab.somas.Apostrophe.desktop";
   helium = "helium.desktop";
   fragments = "de.haeckerfelix.Fragments.desktop";
+  fileRoller = "org.gnome.FileRoller.desktop";
 
   assign = app: mimes: map (m: lib.nameValuePair m app) mimes;
 
@@ -162,6 +163,24 @@ let
     "application/x-bittorrent"
     "x-scheme-handler/magnet"
   ];
+
+  archiveMimes = [
+    "application/gzip"
+    "application/vnd.rar"
+    "application/x-7z-compressed"
+    "application/x-bzip2"
+    "application/x-bzip2-compressed-tar"
+    "application/x-compressed-tar"
+    "application/x-cpio"
+    "application/x-lzma-compressed-tar"
+    "application/x-rar"
+    "application/x-tar"
+    "application/x-xz"
+    "application/x-xz-compressed-tar"
+    "application/x-zstd-compressed-tar"
+    "application/zip"
+    "application/zstd"
+  ];
 in
 {
   home.file = builtins.listToAttrs (map hideEntry hiddenApps);
@@ -178,6 +197,7 @@ in
       ++ assign apostrophe [ "text/markdown" ]
       ++ assign helium browserMimes
       ++ assign fragments torrentMimes
+      ++ assign fileRoller archiveMimes
     );
   };
 
