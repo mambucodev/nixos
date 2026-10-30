@@ -310,6 +310,59 @@ sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/
 
 > **Security trade-off:** without a PIN, anyone holding the laptop can boot it to the login screen; disk confidentiality then rests on your user password and Secure Boot. Use `--tpm2-with-pin=yes` if that's not acceptable.
 
+### 7. Remote Builder (Optional)
+`modules/remote-builder` offloads builds to a more powerful machine over SSH, so packages that never come from cache.nixos.org (Lanzaboote, Aseprite, overridden or unfree packages) compile there instead of on the laptop. The builder can run any Linux distro with Nix installed; it does not need to be NixOS.
+
+The repo only refers to the SSH alias `nix-builder`. The real hostname, user, key and host key live in root's SSH files, so they never get published. Until that alias resolves, Nix builds locally as usual, which means a fresh install works without any of this. To drop remote building entirely, remove `../../modules/remote-builder` from the host's imports.
+
+1. **Install Nix on the builder** (multi-user), trust your account there, and let Nix clean up its store when the disk runs low:
+   ```bash
+   sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+   sudo tee -a /etc/nix/nix.conf <<'EOF'
+   trusted-users = root <user>
+   min-free = 20G
+   max-free = 60G
+   EOF
+   sudo systemctl restart nix-daemon
+   ```
+
+2. **Create root's key and the `nix-builder` alias on the laptop.** The laptop's `nix-daemon` opens the connection as root, so these go in `/root/.ssh`:
+   ```bash
+   sudo ssh-keygen -t ed25519 -N "" -C freetop-nix-builder -f /root/.ssh/nix-builder
+   sudo tee -a /root/.ssh/config <<'EOF'
+   Host nix-builder
+     HostName <builder-host>
+     User <user>
+     IdentityFile /root/.ssh/nix-builder
+     IdentitiesOnly yes
+     ConnectTimeout 5
+     ServerAliveInterval 30
+   EOF
+   ssh-keyscan -t ed25519 <builder-host> | sudo tee -a /root/.ssh/known_hosts
+   ```
+   Check the scanned key against `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` run on the builder. `ConnectTimeout` makes builds fall back to local quickly when you're offline.
+
+3. **Authorise the key on the builder.** The key is restricted so that it can only talk to the Nix daemon and can't open a shell:
+   ```bash
+   echo "restrict,command=\"/nix/var/nix/profiles/default/bin/nix-daemon --stdio\" $(sudo cat /root/.ssh/nix-builder.pub)" \
+     | ssh <user>@<builder-host> 'cat >> ~/.ssh/authorized_keys'
+   ```
+
+4. **Test the connection:**
+   ```bash
+   sudo nix store info --store 'ssh-ng://nix-builder?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon'
+   ```
+
+5. **First rebuild.** The builder entry only takes effect after a switch, so pass it on the command line once so that this rebuild is offloaded too:
+   ```bash
+   sudo nixos-rebuild switch \
+     --option builders 'ssh-ng://nix-builder?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon x86_64-linux - 4 10 big-parallel,benchmark' \
+     --option builders-use-substitutes true
+   ```
+   After that, a plain `sudo nixos-rebuild switch` offloads automatically. Builds that ran remotely are logged as `building '…' on 'ssh-ng://nix-builder…'`. To check, run `nix build nixpkgs#hello --rebuild -L`.
+
+**What it doesn't speed up:** vendor binaries such as Antigravity, Spotify and Chrome still download to the laptop. Only builds that actually compile benefit. The builder fetches its own dependencies from cache.nixos.org (`builders-use-substitutes`), so your upload link only carries the build results back.
+
 ---
 
 ## 7. Troubleshooting & Gotchas
