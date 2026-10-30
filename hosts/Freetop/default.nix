@@ -29,6 +29,7 @@
     ../../modules/avahi
     ../../modules/network-displays
     ../../modules/tailscale
+    ../../modules/remote-builder
     ../../modules/syncthing
     ../../modules/ollama
     ../../modules/steam
