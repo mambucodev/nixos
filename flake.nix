@@ -16,11 +16,7 @@
 
     helium = {
       url = "github:schembriaiden/helium-browser-nix-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        # Only ever evaluated for x86_64-darwin, which this host is not.
-        nixpkgs-darwin.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     antigravity = {
