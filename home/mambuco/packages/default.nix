@@ -113,4 +113,9 @@ in
       '';
     }))
   ];
+
+  # Bitwarden's default memfd_secret key store makes the kernel disable
+  # hibernation while it runs (bitwarden/clients#21661). environment.d reaches
+  # its self-written autostart entry too, which a wrapper would miss.
+  systemd.user.sessionVariables.SECURE_KEY_CONTAINER_BACKEND = "keyctl";
 }
